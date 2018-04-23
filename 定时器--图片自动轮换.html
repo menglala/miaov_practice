@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--图片自动轮换</title>
+    <style>
+        .box{
+            padding: 0;
+            width: 350px;
+            margin: 100px auto;
+            height: 280px; 
+            position: relative;
+            overflow: hidden;
+        }
+       #pics{
+           width: 3000px;
+           position: absolute;
+           left: 0;
+       }
+        #list li{
+            list-style: none;
+            position: absolute;
+            top: 300px;
+            /* top: 200px; */
+            left: 0px;
+            background-color: #eee;
+            opacity: 0.6;
+            padding: 10px;
+        }
+        
+        #list span{
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #list p{
+            font-size: 12px;
+        }
+        img{
+            position: absolute;
+            width: 350px;
+            height: 300px;
+        }
+        
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        //父集隐藏区域外的内容,让图片子集在父集中左移,并将第一张图片最后再重复一次,循环的时候不会闪烁
+        //回调函数,嵌套定时器
+        window.onload = function () {
+            var aImg = document.getElementsByTagName('img'),
+                oUl = document.getElementById('list'),
+                aLi = oUl.getElementsByTagName('li'),
+                oPic = document.getElementById('pics'),
+                num = 0,
+                timer = null;
+
+            for (let i = 0; i < aImg.length; i++) {
+                aImg[i].style.left = i * 350 + 'px';
+            }
+
+            doMove(aLi[0], 'top', 7, 200, function () {
+                setTimeout(function () {
+                    doMove(aLi[num], 'top', 7, 300)
+                }, 1000);
+            })
+            //为了使每张图片停顿,设置timer和target
+            timer = setInterval(function () {
+                var target = -(350 + 350 * num);
+
+                doMove(oPic, 'left', 2, target, function () {
+                    num++;
+                    doMove(aLi[num], 'top', 7, 200, function () {
+                        setTimeout(function () {
+                            doMove(aLi[num], 'top', 7, 300)
+                            if (num == aLi.length - 1) {
+                                oPic.style.left = 0;
+                                num = 0;
+                            }
+                        }, 1000)
+                    });
+                });
+
+            }, 2500)
+            //因为timer和domove()不是回调函数的关系,所以timer的时间要足够长,使里面的doMove()全都执行完
+            //才能衔接上
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div id="pics"> 
+            <img src="imgs/tv1.jpg" alt="tv">
+            <img src="imgs/tv2.jpg" alt="tv">
+            <img src="imgs/tv3.jpg" alt="tv">
+            <img src="imgs/tv4.jpg" alt="tv">
+            <img src="imgs/tv1.jpg" alt="tv">
+        </div>
+       
+        <ul id="list">
+            <li id="show">
+                <span>
+                    海贼王
+                </span>
+                <p>拥有财富、名声、权力，这世界上的一切的男人 “海贼王”哥尔·D·罗杰，在被行刑受死之前说了一句话，
+                    让全世界的人都涌向了大海。“想要我的宝藏吗？如果想要的话，那就到海上去找吧，我全部都放在那里。”，
+                    世界开始迎接“大海贼时代”的来临[8] 。 时值“大海贼时代”，为了寻找传说中海贼王罗杰所留下的大秘宝“ONE
+                PIECE”，无数海贼扬起旗帜，互相争斗。有一个梦想成为海盗的少年叫路飞，他因误食“恶魔果实”而成为了橡皮人，
+                在获得超人能力的同时付出了一辈子无法游泳的代价。十年后，路飞为实现与因救他而断臂的香克斯的约定而出海，
+                他在旅途中不断寻找志同道合的伙伴，开始了以成为海贼王为目标的伟大的冒险旅程[9]
+                。
+                </p>
+            </li>
+            <li>
+                <span>全职猎人</span>
+                <p>主人公杰·富力士从小在鲸鱼岛长大，与米特阿姨和阿婆相依为伴。性格开朗的他，有着能与动物沟通的灵性。
+                    因为无父无母，杰将米特阿姨当成自己的生母爱着。直到9岁那一年，杰在森林里被一位青年男子搭救。
+                    从他口中杰得知自己的父亲还活着而且职业是猎人。在说服米特阿姨之后，杰独自踏上了寻父的征程。于是，
+                    杰决定成为猎人，从这里开始找寻他父亲的踪迹。靠这样一种信念开始了冒险旅途，并在旅途当中结交好友，
+                    不断成长，从而引发了后面的所有故事，引出猎人的精彩世界。[2]
+                </p>
+            </li>
+            <li>
+                <span>犬夜叉</span>
+                <p>战国时代，大妖怪斗牙王与人类公主十六夜的儿子——半妖犬夜叉，因为自己半妖的身份受到人类与妖怪的排斥，
+                    为了成为真正的妖怪而想得到四魂之玉；而巫女桔梗为了保护和净化四魂之玉，运用灵力不断与前来抢夺四魂
+                    之玉的妖怪战斗。命运的红线牵引的两人虽然在开始互为敌对，但两人却也因四魂之玉结缘，桔梗发现了犬夜叉
+                    粗鲁外表下的善良，以及与自己同样的孤独；而犬夜叉也看到了桔梗在孤高的外表下其实也有颗孤单的、渴望被
+                    爱的心。</p>
+            </li>
+            <li>
+                <span>火影忍者</span>
+                <p>一个忍者的世界，故事从主人公漩涡鸣人的孤儿生活开始，四代火影为了保护村子，将攻击村子九尾妖狐封印到
+                    了他体内,鸣人因此受尽了村人的冷落，只是拼命用各种恶作剧试图吸引大家的注意力。好在还是有伊鲁卡老师的
+                    关心，鸣人的性格才没有变得扭曲，他总是干劲十足、非常乐观。为了让更多的人认可自己，鸣人的目标是成为
+                    火影。整个故事就围绕 鸣人的奋斗、成长，鸣人的伙伴们，以及这个忍者世界的各种争斗和阴谋展开。</p>
+            </li>
+            <li>
+                <span>
+                    海贼王
+                </span>
+                <p>拥有财富、名声、权力，这世界上的一切的男人 “海贼王”哥尔·D·罗杰，在被行刑受死之前说了一句话，
+                    让全世界的人都涌向了大海。“想要我的宝藏吗？如果想要的话，那就到海上去找吧，我全部都放在那里。”，
+                    世界开始迎接“大海贼时代”的来临[8] 。 时值“大海贼时代”，为了寻找传说中海贼王罗杰所留下的大秘宝“ONE
+                PIECE”，无数海贼扬起旗帜，互相争斗。有一个梦想成为海盗的少年叫路飞，他因误食“恶魔果实”而成为了橡皮人，
+                在获得超人能力的同时付出了一辈子无法游泳的代价。十年后，路飞为实现与因救他而断臂的香克斯的约定而出海，
+                他在旅途中不断寻找志同道合的伙伴，开始了以成为海贼王为目标的伟大的冒险旅程[9]
+                。
+                </p>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

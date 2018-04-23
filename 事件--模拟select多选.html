@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件 - 模拟selected多选</title>
+    <style>
+        .wrap {
+            margin: 20px auto;
+            width: 270px;
+            cursor: pointer;
+        }
+
+        #selected {
+            width: 250px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid orange;
+            padding: 5px;
+        }
+
+        #list {
+            width: 260px;
+            padding: 0;
+            border: 1px solid orange;
+            margin: -1px 0 0 0;
+            border-bottom: none;
+            display: none;
+        }
+
+        #list li {
+            list-style: none;
+            border-bottom: 1px solid orange;
+            height: 30px;
+            line-height: 30px;
+            padding: 5px;
+            user-select: none;
+        }
+
+        #list li:hover {
+            background-color: orange;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .active {
+            background-color: orange;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            //无法解决shift按下时,文字被选中的默认行为.
+            var oShow = document.getElementById('selected'),
+                oUl = document.getElementById('list'),
+                ev = event || window.event,
+                arr = [],
+                aLi = oUl.getElementsByTagName('li');
+
+            document.onclick = function () {
+                oUl.style.display = 'none';
+                //清空上次选中的选项
+                arr = [];
+            }
+
+            oShow.onclick = function (ev) {
+                oUl.style.display = 'block';
+                //触发了document的onclick事件，oUl无法显示，需要取消事件捕获
+                ev.stopPropagation();
+            }
+            for (let i = 0; i < aLi.length; i++) {
+                aLi[i].onclick = function (ev) {
+                    if (ev.shiftKey) {
+                        ev.stopPropagation();
+                        ev.returnValue=false;
+                    }
+                    //将arr中存储的被选中的选项遍历,arr中若有已选中的则删除该选项并跳出
+                    for (let j = 0; j < arr.length; j++) {
+                        if (arr[j] == this.innerHTML) {
+                            arr.splice(j, 1);
+                            oShow.innerHTML = arr.join(',');
+                            setBgColor();
+                            return;
+                        }
+
+                    }
+                    //当shift键没有按下的时候,选择每个选项会事件捕获触发document的点击事件,使oUl隐藏,清空arr
+                    arr.push(this.innerHTML);
+                    oShow.innerHTML = arr.join(',');
+                    setBgColor();
+                }
+                //将被选中的li的背景和字体颜色设置高亮
+                function setBgColor() {
+                    for (let j = 0; j < aLi.length; j++) {
+                        aLi[j].className = '';
+                    }
+                    var arr1 = oShow.innerHTML.split(',');
+                    for (let i = 0; i < arr1.length; i++) {
+                        for (let j = 0; j < aLi.length; j++) {
+                            if (arr1[i] == aLi[j].innerHTML) {
+                                aLi[j].className = 'active';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="selected">按住shift多选</div>
+        <ul id="list">
+            <li>黑体</li>
+            <li>微软雅黑</li>
+            <li>楷体</li>
+            <li>隶书</li>
+            <li>华文中宋</li>
+            <li>宋体</li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSON应用--自定义字体</title>
+    <style>
+        .content {
+            background: url(imgs/bg.jpg) no-repeat;
+            width: 556px;
+            height: 540px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        #show_text {
+            width: 398px;
+            height: 285px;
+            top: 93px;
+            left: 10px;
+            position: absolute;
+            overflow: auto;
+        }
+
+        select {
+            position: absolute;
+            top: 381px;
+            left: 34px;
+            width: 100px;
+            height: 24px;
+        }
+
+        textarea {
+            position: absolute;
+            top: 407px;
+            width: 393px;
+            height: 88px;
+        }
+
+        button {
+            position: absolute;
+            top: 507px;
+            left: 320px;
+            width: 62px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oSelect = document.getElementsByTagName('select')[0],
+                oP = document.getElementsByClassName('p')[0],
+                show_text = document.getElementById('show_text'),
+                oText = document.getElementById('text'),
+                oBtn = document.getElementsByTagName('button')[0],
+                str = '',
+                json = {
+                    'love': "imgs/heart.gif",
+                    'knife': "imgs/knife.gif",
+                    'jiong': "imgs/jiong.gif",
+                };
+
+            function changeFont(fontStyle, url) {
+                var aText = oText.value.split('');
+                if (oSelect.value == fontStyle) {
+                    for (let i = 0; i < aText.length; i++) {
+                        str += '<img src="' + url + '"><span>' + aText[i] + '</span>';
+                    }
+                    show_text.innerHTML += str;
+                    oText.value='';
+                }
+            }
+
+            oBtn.onclick = function () {
+                if (oText.value == '') return alert('请输入一些内容');
+                if (oSelect.value == 'default') {
+                    show_text.innerHTML += '<span>'+oText.value+'</span>';
+                    oText.value = '';
+                } else {
+                    for (const attr in json) {
+                        changeFont([attr], json[attr]);
+                    }
+                }
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="content">
+            <div id="show_text"></div>
+            <select name="select" id="select">
+                <option value="default" selected>默认字体</option>
+                <option value="knife">砍刀字体</option>
+                <option value="jiong">囧字体</option>
+                <option value="love">爱心字体</option>
+            </select>
+            <textarea name="text" id="text" cols="30" rows="10"></textarea>
+            <button>发送</button>
+        </div>
+    </div>
+</body>
+
+</html>

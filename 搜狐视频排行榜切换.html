@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>搜狐视频排行榜切换</title>
+</head>
+<style type="text/css">
+li {
+    list-style: none;
+}
+
+.container {
+    width: 600px;
+}
+
+#list li {
+    display: inline-block;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    padding: 0 10px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+#context ul li strong {
+    margin-left: 10px;
+    background: #bfbfbf;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+#context ul li{
+	position: relative;
+}
+#context ul li a {
+    text-decoration: none;
+    color: #000;
+    line-height: 30px;
+    margin-left: 20px;
+    font-family: monospace;
+}
+#context ul span{
+	float: right;
+}
+.a_text{
+	display: none;
+	position: absolute;
+	font-size: 12px;
+}
+.a_text p{
+	display: inline-block;
+    float: right;
+    width: 350px;
+    margin:0 10px;
+}
+.a_text img{
+	width: 60px;
+	height: 70px;
+	margin:0 25px;
+}
+</style>
+<script type="text/javascript">
+	window.onload=function(){
+		var oUl=document.getElementById('list'),
+			aLi=oUl.getElementsByTagName('li'),
+			oDivtxt=document.getElementById('context'),
+			aUl=oDivtxt.getElementsByTagName('ul');
+			
+		for (var i = 0; i < aLi.length; i++) {
+			aLi[i].index=i;
+
+			aLi[i].onclick=function(){
+				for (var i = 0; i < aUl.length; i++) {
+					aUl[i].style.display='none';
+					aLi[i].style.color='#000';
+				}
+				this.style.color='red';
+				aUl[this.index].style.display='block';
+			}
+		}
+		function showDiv(id){
+			var aLink=id.getElementsByTagName('li'),
+				aDiv=id.getElementsByTagName('div');
+
+			for (var i = 0; i < aLink.length; i++) {
+				aLink[i].index=i;
+				aLink[i].onmouseover=function(){
+					this.getElementsByTagName('a')[0].style.display='none';
+					aDiv[this.index].style.display='inline-block';
+					this.style.height='120px';
+				}
+				aLink[i].onmouseout=function(){
+					this.getElementsByTagName('a')[0].style.display='inline-block';
+					aDiv[this.index].style.display='none';
+					this.style.height='auto';
+				}
+			}
+		}
+		for (var i = 0; i < aUl.length; i++) {
+			showDiv(aUl[i]);
+		}
+	}
+</script>
+
+<body>
+    <div class="container">
+        <ul id="list">
+            <li>每日</li>
+            <li>每周</li>
+            <li>全部</li>
+        </ul>
+        <div id="context">
+            <ul id="contxt_day">
+                <li>
+                	<strong>1</strong>
+                	<a href="#">越狱第1季 Prison Break S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>2</strong>
+                	<a href="#">尼基塔第1季 Nikita S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>3</strong>
+                	<a href="#">血族第1季 The Strain S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>4</strong>
+                	<a href="#">越狱第2季 Prison Break S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>5</strong>
+                	<a href="#">生活大爆炸第8季 The Big Bang The...</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>6</strong>
+                	<a href="#">越狱第4季 Prison Break S04</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>7</strong>
+                	<a href="#">尼基塔第2季 Nikita S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>8</strong>
+                	<a href="#">生活大爆炸第9季 The Big Bang The...</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>9</strong>
+                	<a href="#">破产姐妹第1季 2 Broke Girls S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>10</strong>
+                	<a href="#">破产姐妹第3季 2 Broke Girls S03</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+            </ul> 
+            <ul id="contxt_month" style="display: none">
+                <li>
+                	<strong>1</strong>
+                	<a href="#">美国罪恶第2季 American Crime S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>2</strong>
+                	<a href="#">血族第1季 The Strain S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>3</strong>
+                	<a href="#">尼基塔第1季 Nikita S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>4</strong>
+                	<a href="#">生活大爆炸第8季 The Big Bang The...</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>5</strong>
+                	<a href="#">越狱第2季 Prison Break S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>6</strong>
+                	<a href="#">尼基塔第2季 Nikita S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>7</strong>
+                	<a href="#">生活大爆炸第9季 The Big Bang The...</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>8</strong>
+                	<a href="#">破产姐妹第1季 2 Broke Girls S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>9</strong>
+                	<a href="#">破产姐妹第3季 2 Broke Girls S03</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>10</strong>
+                	<a href="#">越狱第4季 Prison Break S04</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+            </ul>
+            <ul id="contxt_day_all" style="display: none;">
+                <li>
+                	<strong>1</strong>
+                	<a href="#">越狱第1季 Prison Break S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>2</strong>
+                	<a href="#">冰血暴第3季 Fargo Season 3</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>3</strong>
+                	<a href="#">血族第1季 The Strain S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>4</strong>
+                	<a href="#">越狱第2季 Prison Break S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>5</strong>
+                	<a href="#">生活大爆炸第8季 The Big Bang The...</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>6</strong>
+                	<a href="#">越狱第4季 Prison Break S04</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>7</strong>
+                	<a href="#">尼基塔第2季 Nikita S02</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>8</strong>
+                	<a href="#">生活大爆炸第9季 The Big Bang The...</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>9</strong>
+                	<a href="#">破产姐妹第1季 2 Broke Girls S01</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+                <li>
+                	<strong>10</strong>
+                	<a href="#">破产姐妹第3季 2 Broke Girls S03</a>
+                    <div class="a_text"><img src="imgs/video.jpg"><p>简介：《美国重案》这部剧很好地反映了当代美国人种族观、阶级观和性别政治等社会问题。在第二季中，故事情节以美国中西部的两所高中（一所公立，一所私立）为背景展开，借由一个高中男生在校园派对上的照片被媒体曝光的事件，揭示了性取向问题和社会经济不平等的现状。而当这个男生控告校园篮球队的两名球员吸食毒品，对其施暴，并将其放上网络时，剧情就变得更加复杂。后来，一切都失控了。</p></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--延时消失的菜单</title>
+    <style>
+        #menu {
+            margin: 20px auto;
+            border-radius: 20px;
+            background-color: rgba(72, 83, 144, 0.87);
+            color: white;
+            height: 40px;
+            line-height: 40px;
+            width: 800px;
+            font-size: 18px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        #menu span {
+            margin-left: 30px;
+            cursor: pointer;
+
+        }
+
+        a {
+            padding: 5px 30px;
+        }
+
+        a:hover {
+            border-radius: 10px;
+            background-color: #8e98cc;
+        }
+
+        b {
+            float: right;
+            margin-right: 30px;
+            cursor: pointer;
+        }
+
+        li {
+            list-style: none;
+            display: inline;
+            padding: 0 10px;
+            border-right: 1px solid;
+            cursor: pointer;
+        }
+
+        ul {
+            width: 240px;
+            background-color: #cfd6f8;
+            color: rgba(72, 83, 144, 0.87);
+            height: 35px;
+            line-height: 35px;
+            border-radius: 10px;
+            padding: 0 5px;
+            float: left;
+            position: absolute;
+            top: 50px;
+            display: none;
+        }
+
+        #literature {
+            left: 130px;
+        }
+
+        #culture {
+            left: 260px;
+        }
+
+        #science {
+            left: 390px;
+        }
+
+        #current {
+            left: 530px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oDiv = document.getElementById('menu'),
+                aSpan = oDiv.getElementsByTagName('span'),
+                timer = null,
+                aUl = document.getElementsByTagName('ul');
+
+            for (let i = 0; i < aSpan.length; i++) {
+                aSpan[i].index = i;
+                aSpan[i].onmouseover = function () {
+                    for (let i = 0; i < aUl.length; i++) {
+                        aUl[i].style.display='none';
+                    }
+                    aUl[this.index].style.display = 'block';
+                }
+                aSpan[i].onmouseout = function () {
+                    var _this = this;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        aUl[_this.index].style.display = 'none';
+                    }, 1000)
+                }
+            }
+
+            for (let i = 0; i < aUl.length; i++) {
+                aUl[i].index = i;
+                aUl[i].onmouseover = function () {
+                    clearTimeout(timer);
+                }
+                aUl[i].onmouseout = function () {
+                    var _this = this;
+                    timer = setTimeout(function () {
+                        aUl[_this.index].style.display = 'none';
+                    }, 1000)
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div id="menu">
+            <span>
+                <a>文学</a>
+            </span>
+            <span>
+                <a>文化</a>
+            </span>
+            <span>
+                <a>科技</a>
+            </span>
+            <span>
+                <a>流行</a>
+            </span>
+            <b>>>更多</b>
+        </div>
+        <ul id="literature">
+            <li>小说</li>
+            <li>随笔</li>
+            <li>日本文学</li>
+        </ul>
+        <ul id="culture">
+            <li>历史</li>
+            <li>哲学</li>
+            <li>传记</li>
+        </ul>
+        <ul id="science">
+            <li>互联网</li>
+            <li>编程</li>
+            <li>交互设计</li>
+        </ul>
+        <ul id="current">
+            <li>推理</li>
+            <li>青春</li>
+            <li>科幻</li>
+            <li>武侠</li>
+        </ul>
+    </div>
+</body>
+
+</html>

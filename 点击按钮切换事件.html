@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>点击按钮切换事件</title>
+	<style type="text/css">
+		.btn1{
+			width: 50px;
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			font-size: 24px;
+			margin-right: 5px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var attr=['A','B','C','D','0'];
+			var num=0;
+			var aBtn=document.getElementsByTagName('button');
+
+
+			for (var i = 0; i <aBtn.length; i++) {
+				//alert(aBtn[i]);
+				aBtn[i].num=0;
+
+			  	aBtn[i].onclick=function(){
+			  		
+					this.innerHTML=attr[this.num];
+
+
+			  		if (this.num==4) {
+			  			
+			  			this.num=0
+			  		}else{
+			  			this.num++;
+			  		}
+			  	}
+			}
+		}
+	</script>
+</head>
+<body>
+	<button class="btn1">0</button>
+	<button class="btn1">0</button>
+	<button class="btn1">0</button>
+	<button class="btn1">0</button>
+</body>
+</html>

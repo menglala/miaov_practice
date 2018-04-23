@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>仿QQ列表展开收缩</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    #list {
+        width: 200px;
+        height: auto;
+        margin: 50px auto;
+        background: #04BF40;
+        color: #fff;
+        border: 1px solid #eee;
+        text-align: left;
+        text-indent: 20px;
+    }
+
+    .name {
+        list-style: none;
+        border: 1px solid #fff;
+        cursor: pointer;
+    }
+
+    .name ul {
+        display: none;
+        cursor: pointer;
+    }
+
+    .name ul li {
+        text-indent: 30px;
+        border-top: 1px solid #eee;
+        background: #fff;
+        color: black;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .name ul li:hover {
+        background: #F6EDAF;
+    }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+        var oList = document.getElementById('list'),
+            aUl = oList.getElementsByTagName('ul'),
+            aH = oList.getElementsByTagName('h2');
+
+        for (var i = 0; i < aH.length; i++) {
+            aH[i].index = i;
+            aH[i].flag = 0;
+
+            aH[i].onclick = function() {
+                if (this.flag == 0) {
+                    aUl[this.index].style.display = 'block';
+                    this.flag = 1;
+                } else {
+                    aUl[this.index].style.display = 'none';
+                    this.flag = 0;
+                }
+            }
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <ul id="list">
+        <li class="name">
+            <h2>我的好友</h2>
+            <ul>
+                <li class="active">狗壮</li>
+                <li>毛咕</li>
+                <li>狗蛋</li>
+            </ul>
+        </li>
+        <li class="name">
+            <h2>我的朋友</h2>
+            <ul>
+                <li>猪</li>
+                <li>小傻肥</li>
+            </ul>
+        </li>
+        <li class="name">
+            <h2>我的同学</h2>
+            <ul>
+                <li>不造谁</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+
+</html>

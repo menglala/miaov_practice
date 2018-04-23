@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--图片切换(只用两个img)</title>
+    <style>
+        .box {
+            margin: 15px auto;
+            width: 600px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #pics {
+            width: 600px;
+            position: absolute;
+        }
+
+        img {
+            width: 600px;
+            position: absolute;
+        }
+
+        a {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 90px;
+            color: white;
+            background-color: hsl(207, 26%, 60%);
+            top: 200px;
+            text-decoration: none;
+            font-size: 28px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        #prev {
+            left: 8px;
+        }
+
+        #next {
+            right: 0px;
+        }
+
+        #list {
+            position: absolute;
+            bottom: 40px;
+            padding: 0;
+            left: 250px;
+        }
+
+        #list li {
+            width: 20px;
+            height: 20px;
+            background-color: #eee;
+            border-radius: 90px;
+            list-style: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        a:hover {
+            opacity: 1.0;
+        }
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var aImg = document.getElementsByTagName('img'),
+                oPic = document.getElementById('pics'),
+                oPrev = document.getElementById('prev'),
+                oNext = document.getElementById('next'),
+                oUl = document.getElementById('list'),
+                aLi = oUl.getElementsByTagName('li'),
+                arrImg = ['imgs/tv3.jpg', 'imgs/tv4.jpg', 'imgs/tv2.jpg', 'imgs/tv5.jpg'],
+                flag = true,
+                num = 0;
+
+            for (let i = 0; i < aImg.length; i++) {
+                aImg[i].style.left = i * 600 + 'px';
+            }
+            for (let j = 0; j < aLi.length; j++) {
+                aLi[j].index = j;
+                aLi[j].onclick = function () {
+                    if (this.index > num) {
+                        aImg[0].src = arrImg[num];
+                        oPic.style.left = 0;
+                        aImg[1].src = arrImg[this.index];
+                        num = this.index;
+                        doMove(oPic, 'left', 10, -600, showNow);
+                    } else if (this.index < num) {
+                        aImg[1].src = arrImg[num];
+                        oPic.style.left = -600 + 'px';
+                        aImg[0].src = arrImg[this.index];
+                        num = this.index;
+                        doMove(oPic, 'left', 10, 0, showNow);
+                    } else {
+                        return;
+                    }
+                }
+            }
+            function showNow() {
+                for (let i = 0; i < aLi.length; i++) {
+                    aLi[i].style.backgroundColor = '#eee';
+                    aLi[num].style.backgroundColor = '#000';
+                }
+            }
+
+            oPrev.onclick = function () {
+                if (flag == true) {
+                    aImg[1].src = arrImg[num];
+                    flag = false;
+                    oPic.style.left = -600 + 'px';
+                    num == 0 ? num = arrImg.length - 1 : num--;
+                    aImg[0].src = arrImg[num];
+                    doMove(oPic, 'left', 10, 0, function () {
+                        showNow();
+                        flag = true;
+                    });
+                } else {
+                    return;
+                }
+
+            }
+            oNext.onclick = function () {
+                if (flag == true) {
+                    flag = false; aImg[0].src = arrImg[num];
+                    num == arrImg.length - 1 ? num = 0 : num++;
+                    oPic.style.left = 0 + 'px';
+                    aImg[1].src = arrImg[num];
+                    doMove(oPic, 'left', 10, -600, function () {
+                        showNow();
+                        flag = true;
+                    });
+                } else {
+                    return;
+                }
+
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div id="pics">
+            <img src="imgs/tv3.jpg" alt="pics">
+            <img src="imgs/tv4.jpg" alt="pics">
+        </div>
+        <a href="#" id="prev">
+            <</a>
+                <a href="#" id="next">></a>
+                <ul id="list">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+    </div>
+</body>
+
+</html>

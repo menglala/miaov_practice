@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日期方法--图片时钟</title>
+    <style>
+        #clock {
+            margin: 10px auto;
+            width: 600px;
+        }
+
+        img {
+            width: 60px;
+            height: 80px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oP = document.getElementsByTagName('p')[0],
+                aImg = document.getElementsByTagName('img'),
+                sTime = '',
+                str = '',
+                timer = null;
+
+
+            function fnTime() {
+                var iTime = new Date(),
+                    iYear = iTime.getFullYear(),
+                    iMon = iTime.getMonth(),
+                    iDay = iTime.getDay(),
+                    iDate = iTime.getDate(),
+                    iHour = iTime.getHours(),
+                    iMin = iTime.getMinutes(),
+                    iSec = iTime.getSeconds();
+
+
+                switch (iDay) {
+                    case 1:
+                        iDay = '星期一';
+                        break;
+                    case 2:
+                        iDay = '星期二';
+                        break;
+                    case 3:
+                        iDay = '星期三';
+                        break;
+                    case 4:
+                        iDay = '星期四';
+                        break;
+                    case 5:
+                        iDay = '星期五';
+                        break;
+                    case 6:
+                        iDay = '星期六';
+                        break;
+                    case 0:
+                        iDay = '星期天';
+                        break;
+                }
+
+                function toTwo(t) {
+                    return t < 10 ? '0' + t : '' + t;
+                }
+                iHour = toTwo(iHour);
+                iMin = toTwo(iMin);
+                iSec = toTwo(iSec);
+                iMon = iMon + 1;
+
+
+                str = iYear + '年' + iMon + '月' + iDate + '日' + ' ' + iDay + iHour + ':' + iMin + ':' + iSec;
+                oP.innerHTML = str;
+                sTime = iHour + iMin + iSec;
+
+                aImg[0].src = 'imgs/' + sTime.charAt(0) + '.jpg';
+                aImg[1].src = 'imgs/' + sTime.charAt(1) + '.jpg';
+                aImg[3].src = 'imgs/' + sTime.charAt(2) + '.jpg';
+                aImg[4].src = 'imgs/' + sTime.charAt(3) + '.jpg';
+                aImg[6].src = 'imgs/' + sTime.charAt(4) + '.jpg';
+                aImg[7].src = 'imgs/' + sTime.charAt(5) + '.jpg';
+            }
+            fnTime();
+            timer = setInterval(fnTime, 1000);
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <p></p>
+        <div id="clock">
+            <img src="imgs/0.JPG" alt="time">
+            <img src="imgs/0.JPG" alt="time">
+            <img src="imgs/colon.JPG" alt="time">
+            <img src="imgs/0.JPG" alt="time">
+            <img src="imgs/0.JPG" alt="time">
+            <img src="imgs/colon.JPG" alt="time">
+            <img src="imgs/0.JPG" alt="time">
+            <img src="imgs/0.JPG" alt="time">
+        </div>
+    </div>
+</body>
+
+</html>

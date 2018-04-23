@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-留言板功能</title>
+    <script>
+        window.onload = function () {
+            var oBtn = document.getElementsByTagName('button')[0],
+                oText = document.getElementById('text'),
+                oUl = document.getElementById('list');
+
+            oBtn.onclick = function () {
+                var text = document.createTextNode(oText.value);
+                var oLi = document.createElement('li');
+                oLi.appendChild(text);
+                if (oUl.firstChild) {
+                    oUl.insertBefore(oLi, oUl.firstChild);
+                } else {
+                    oUl.appendChild(oLi);
+                }
+                oText.value = '';
+                if (oUl.childNodes.length == 6) {
+                    oUl.removeChild(oUl.lastChild);
+                }
+            }
+        }            
+    </script>
+</head>
+
+<body>
+    <input type="text" id="text">
+    <button>留言</button>
+    <ul id="list"></ul>
+</body>
+
+</html>

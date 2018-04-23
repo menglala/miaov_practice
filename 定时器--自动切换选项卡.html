@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--自动切换选项卡</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            width: 500px;
+            height: 500px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        ul {
+            list-style: none;
+            color: white;
+        }
+
+        #nav li {
+            display: inline-block;
+            background-color: #88b4d8;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        img {
+            width: 200px;
+            height: 220px;
+        }
+
+        #culture,
+        #economic {
+            display: inline-block;
+            position: absolute;
+            top: 50px;
+            right: 170px;
+        }
+
+        #culture li,
+        #economic li {
+            background-color: #f5f5f5;
+            width: 90px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            margin: 20px;
+            color: #88b4d8;
+            font-family: serif;
+            cursor: pointer;
+        }
+
+        #economic {
+            display: none;
+        }
+    </style>
+    <script>
+        //#4e91c7
+        window.onload = function () {
+            var oNav = document.getElementById('nav'),
+                aLi = oNav.getElementsByTagName('li'),
+                oImg = document.getElementsByTagName('img')[0],
+                oCul = document.getElementById('culture'),
+                oEcom = document.getElementById('economic'),
+                aCul = oCul.getElementsByTagName('li'),
+                aEcom = oEcom.getElementsByTagName('li'),
+                flag = 0,
+                num = 0,
+                timer = null,
+                timerTab = null,
+                attrImg2 = ['imgs/世界经济.PNG', 'imgs/货币强权.PNG', 'imgs/用地图看懂世界经济.PNG'],
+                attrImg = ['imgs/妖怪.PNG', 'imgs/工业革命.PNG', 'imgs/乌合之众.PNG'];
+
+
+            function tabBooks(obj, aImg) {
+                timerTab = setInterval(function () {
+                    for (let i = 0; i < obj.length; i++) {
+                        obj[i].style.fontWeight = 'normal';
+                    }
+                    oImg.src = aImg[num];
+                    obj[num].style.fontWeight = 'bold';
+                    num++;
+                    num == 3 && clearInterval(timerTab);
+                }, 1000)
+            }
+
+            timer = setInterval(function () {
+                for (let i = 0; i < aLi.length; i++) {
+                    aLi[i].style.backgroundColor = '#88b4d8';
+                }
+                if (flag == 0) {
+                    aLi[0].style.backgroundColor = '#4e91c7';
+                    oEcom.style.display = 'none';
+                    oCul.style.display = 'inline-block';
+                    tabBooks(aCul, attrImg);
+                    flag = 1;
+                    num = 0;
+                } else {
+                    aLi[1].style.backgroundColor = '#4e91c7';
+                    oCul.style.display = 'none';
+                    oEcom.style.display = 'inline-block';
+                    tabBooks(aEcom, attrImg2);
+                    flag = 0;
+                    num = 0;
+                }
+            }, 5000)
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <ul id="nav">
+            <li>文学</li>
+            <li>经济</li>
+        </ul>
+        <img src="imgs/妖怪.PNG" alt="妖怪">
+        <ul id="culture">
+            <li>妖怪</li>
+            <li>工业革命</li>
+            <li>乌合之众</li>
+        </ul>
+        <ul id="economic">
+            <li>世界经济入门</li>
+            <li>货币强权</li>
+            <li>用地图看懂世界经济</li>
+        </ul>
+    </div>
+</body>
+
+</html>

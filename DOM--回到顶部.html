@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM--回到顶部</title>
+    <style>
+        .container {
+            width: 100%;
+            height: 1500px;
+            background-color: aquamarine;
+        }
+
+        #backTop {
+            width: 100px;
+            height: 50px;
+            background-color: orange;
+            font-weight: bold;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            line-height: 50px;
+        }
+    </style>
+    <script src="scripts/到浏览器的绝对位置函数(getPos).js"></script>
+    <script>
+        window.onload = function () {
+            var oBtn = document.getElementById('backTop'),
+                //获取可视区的高度
+                clientHeight = document.body.clientHeight || document.documentElement.clientHeight,
+                //获取滚动条的高度
+                scrollTop = document.body.scrollTop || document.documentElement.scrollTop,
+                timer = null;
+            oBtn.onclick = function () {
+                //点击回到顶部按钮时,触发定时器,滚动条匀速向上滚动,页面上移
+                timer = setInterval(function () {
+                    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                    //随着滚动条高度的减小,速度越来越小
+                    var speed = Math.floor(scrollTop / 6);
+                    document.body.scrollTop = document.documentElement.scrollTop = scrollTop - speed;
+                    if (scrollTop <10) {
+                        clearInterval(timer);
+                    }
+                }, 30)
+
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        我是第一行!
+        <div id="backTop">回到顶部</div>
+    </div>
+</body>
+
+</html>

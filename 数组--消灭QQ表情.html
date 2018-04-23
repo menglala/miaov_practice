@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组--消灭QQ表情游戏</title>
+    <style>
+        .wrap {
+            margin: 10px auto;
+            background-color: #eee;
+            text-align: center;
+            padding: 10px;
+
+        }
+
+        button {
+            display: block;
+            margin: 13px auto;
+        }
+
+        .scores {
+            padding: 5px 0 0 8px;
+            text-align: initial;
+            display: inline-block;
+            vertical-align: top;
+            width: 160px;
+            height: 60px;
+            border: 1px solid #000;
+            background-color: rgba(250, 207, 128, 0.459);
+        }
+
+        .gameBox {
+            overflow: hidden;
+            text-align: initial;
+            display: inline-block;
+            width: 850px;
+            height: 430px;
+            background-color: #fff;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        img {
+            position: absolute;
+            top: -23px;
+        }
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var oBtn = document.getElementsByTagName('button')[0],
+                aSpan = document.getElementsByTagName('span'),
+                oBox = document.getElementsByClassName('gameBox')[0],
+                oImg = document.getElementsByTagName('img')[0],
+                timer = null,
+                flag = true,
+                tab = true,
+                str = '',
+                arrImg = ['imgs/1.png', 'imgs/2.png', 'imgs/3.png', 'imgs/4.png', 'imgs/5.png',
+                    'imgs/6.png', 'imgs/7.png', 'imgs/8.png', 'imgs/9.png', 'imgs/10.png'];
+
+
+            //定时器版，还有回调函数版
+            oBtn.onclick = function () {
+                if (flag == false) return;
+                flag = false;
+                var n = 0,
+                    scores = 0,
+                    lose = 0;
+                oBtn.innerHTML = '游戏进行中...';
+                aSpan[0].innerHTML = '得分:' + scores + '分';
+                aSpan[1].innerHTML = '失分:' + lose + '分';
+
+                timer = setInterval(function () {
+                    var index = Math.round(Math.random() * (arrImg.length - 1));
+                    var left = Math.round(Math.random() * 825);
+
+                    if (tab == true) {
+                        oImg.src = arrImg[index];
+                        oImg.style.left = left + 'px';
+                        tab = false;
+                        doMove(oImg, 'top', 1 * (n + 1), 430, function () {
+                            lose++;
+                            aSpan[1].innerHTML = '失分:' + lose + '分';
+                            oImg.style.top = '-23px';
+                            shake(oBox, 'top');
+                            tab = true;
+                        })
+                        n++;
+                    }
+
+                    oImg.onmouseover = function () {
+                        clearInterval(oImg.timer);
+                        oImg.src = 'imgs/qq.png';
+                        shake(oImg, 'left', function () {
+                            oImg.style.top = '-23px';
+                            scores++;
+                            aSpan[0].innerHTML = '得分:' + scores + '分';
+                            tab = true;
+                        })
+                    }
+                    if (scores == 25 || lose == 5) {
+                        tab = true;
+                        flag = true;
+                        clearInterval(timer);
+                        clearInterval(oImg.timer);
+                        oBtn.innerHTML = '开始游戏';
+                        str = scores == 25 ? '恭喜你赢得了游戏!' : '很遗憾...游戏结束了';
+                        alert(str);
+                    }
+                }, 5000)
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <h3>你的鼠标有多快?</h3>
+        <p>游戏说明：点击"开始游戏",随机掉下QQ表情,把鼠标移上去,千万别让他掉下去!!划掉25个算你赢; 掉下5个算你输o(╥﹏╥)o
+        </p>
+        <button>开始游戏</button>
+        <div class="scores">
+            <span>
+                得分:0分
+            </span>
+            br>
+            <span>
+                失分:0分
+            </span>
+        </div>
+        <div class="gameBox">
+            <img src="imgs/1.png" alt="looks">
+        </div>
+    </div>
+</body>
+
+</html>

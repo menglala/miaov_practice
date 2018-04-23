@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度文库评分</title>
+    <style>
+        p {
+            margin: 20px auto;
+            border: 1px solid #eee;
+            width: 500px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        img {
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oP = document.getElementsByTagName('p')[0],
+                oSpan = oP.getElementsByTagName('span')[0],
+                oB = oP.getElementsByTagName('b')[0],
+                aImg = oP.getElementsByTagName('img'),
+                num = 0,
+                flag = 0,
+                attrText = ['极差', '很差', '还行', '不错', '推荐'];
+
+
+            for (var i = 0; i < aImg.length; i++) {
+                aImg[i].index = i;
+
+                aImg[i].onclick = function () {
+                    flag = 1;
+                    for (let i = 0; i < aImg.length; i++) {
+                        aImg[i].src = 'imgs/nst.gif';
+                    }
+                    num = this.index;
+
+                    for (var j = 0; j < this.index + 1; j++) {
+                        if (this.index < 2) {
+                            aImg[j].src = 'imgs/nsg.gif';
+                            oB.innerHTML = attrText[this.index];
+                        } else {
+                            aImg[j].src = 'imgs/sth.gif';
+                            oB.innerHTML = attrText[this.index];
+                        }
+                    }
+                }
+                aImg[i].onmouseover = function () {
+                    for (let i = 0; i < aImg.length; i++) {
+                        aImg[i].src = 'imgs/nst.gif';
+                    }
+                    for (var j = 0; j < this.index + 1; j++) {
+                        if (this.index < 2) {
+                            aImg[j].src = 'imgs/nsg.gif';
+                            oB.innerHTML = attrText[this.index];
+                        } else {
+                            aImg[j].src = 'imgs/sth.gif';
+                            oB.innerHTML = attrText[this.index];
+                        }
+                    }
+                }
+                aImg[i].onmouseout = function () {
+                    for (let i = 0; i < aImg.length; i++) {
+                        aImg[i].src = 'imgs/nst.gif';
+                    }
+                    if (flag == 0) {
+                        oB.innerHTML = '&nbsp&nbsp&nbsp';
+                    } else {
+                        for (let j = 0; j < num + 1; j++) {
+                            if (num < 2 && num > -1) {
+                                aImg[j].src = 'imgs/nsg.gif';
+                            } else {
+                                aImg[j].src = 'imgs/sth.gif';
+                            }
+                        }
+                        oB.innerHTML = attrText[num];
+                    }
+
+                }
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <p>我的评价:
+        <span>
+            <img src="imgs/nst.gif" />
+            <img src="imgs/nst.gif" />
+            <img src="imgs/nst.gif" />
+            <img src="imgs/nst.gif" />
+            <img src="imgs/nst.gif" />
+        </span>
+        <b>&nbsp&nbsp&nbsp</b>
+    </p>
+</body>
+
+</html>

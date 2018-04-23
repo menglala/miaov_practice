@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>模拟手机聊天</title>
+    <style type="text/css">
+    body {
+        width: auto;
+        height: 500px;
+    }
+
+    .container {
+        width: 300px;
+        height: 620px;
+        position: relative;
+        height: 800px;
+        background: url(imgs/mobile.png) no-repeat center center;
+        margin: auto;
+    }
+
+    .content {
+        position: absolute;
+        top: 190px;
+        left: 32px;
+        overflow: scroll;
+        width: 240px;
+        height: 381px;
+    }
+
+    .content p {
+        width: 215px;
+        /* text-align: left; */
+    }
+
+    .content span {
+        max-width: 160px;
+        border: 1px solid #959191;
+        border-radius: 5px;
+        padding: 5px;
+        background: #ccc;
+        word-wrap: break-word;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .content img {
+        margin: 0 3px;
+        border: 1px solid #959191;
+        border-radius: 5px;
+        vertical-align: top;
+    }
+
+    .foot {
+        position: absolute;
+        left: 32px;
+        top: 572px;
+        width: 238px;
+        text-align: center;
+        background-color: #ccc;
+        border-top: 1px solid #959191;
+    }
+
+    .foot input {
+        width: 145px;
+    }
+
+    #header {
+        margin-top: 5px;
+        border-radius: 5px;
+        vertical-align: middle;
+        border: 1px solid #CBC8C8;
+        cursor: pointer;
+    }
+    </style>
+    
+    <script type="text/javascript">
+    window.onload = function() {
+        var oContx = document.getElementById('contx');
+        var oText = document.getElementById('text1');
+        var oSent = document.getElementById('sent');
+        var oHeader = document.getElementById('header');
+
+        oTab = true; //不能设置为局部变量
+
+
+        oHeader.onclick = function() {
+            if (oTab) {
+                oHeader.src = 'imgs/header02.jpg';
+                oTab = false;
+            } else {
+                oHeader.src = 'imgs/header01.jpg';
+                oTab = true;
+            }
+        }
+
+        oSent.onclick = function() {
+            if (oTab) {
+                oContx.innerHTML = '<p style="text-align:right;">' + '<span>' + oText.value + '</span>' + '<img src="imgs/header01.jpg" ></p>' + oContx.innerHTML;
+
+            } else {
+                oContx.innerHTML = '<p style="text-align:left;">' + '<img src="imgs/header02.jpg">' + '<span>' + oText.value + '</span></p>' + oContx.innerHTML;
+            }
+
+
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content" id="contx">
+        </div>
+        <div class="foot">
+            <img id="header" src="imgs/header01.jpg">
+            <input id="text1" type="text" placeholder="输入...">
+            <button class="btn" id="sent">发送</button>
+        </div>
+    </div>
+</body>
+
+</html>

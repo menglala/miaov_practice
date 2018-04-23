@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组方法--图片随机播放</title>
+    <style>
+        .wrap {
+            margin: 20px auto;
+            width: 500px;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            width: 180px;
+            display: inline-block;
+            height: 125px;
+             overflow: hidden;
+        }
+        .phos{
+            width: 180px;  
+            position: relative;
+        }
+
+        img {
+            width: 180px;
+            height: 125px;
+        }
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var aLi = document.getElementsByTagName('li'),
+                aImg=document.getElementsByClassName('phos'),
+                timer = null;
+
+            for (let i = 0; i < aImg.length; i++) {
+                aImg.flag = true;
+            }
+
+            timer = setInterval(function () {
+                var index = Math.round(Math.random() * aLi.length - 1);
+                if (aImg[index].flag == true) {
+                    doMove(aImg[index], 'top', 8, -125, function () {
+                        aImg[index].flag = false;
+                    });
+                } else {
+                    doMove(aImg[index], 'top', 8, 0, function () {
+                        aImg[index].flag = true;
+                    })
+                }
+            }, 1000);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="imgsList">
+            <li>
+                <div class="phos">
+                    <img src="imgs/kikyou3.jpg" alt="pics">
+                    <img src="imgs/kikyou2.jpg" alt="pics">
+                </div>
+
+            </li>
+            <li>
+                <div class="phos">
+                    <img src="imgs/onepiece.jpg" alt="pics">
+                    <img src="imgs/tv5.jpg" alt="pics">
+                </div>
+
+            </li>
+            <li>
+                <div class="phos">
+                    <img src="imgs/itachi.jpg" alt="pics">
+                    <img src="imgs/tv4.jpg" alt="pics">
+                </div>
+
+            </li>
+            <li>
+                <div class="phos">
+                    <img src="imgs/qyc.jpg" alt="pics">
+                    <img src="imgs/tv3.jpg" alt="pics">
+                </div>
+
+            </li>
+            <li>
+                <div class="phos">
+                    <img src="imgs/naruto.jpg" alt="pics">
+                    <img src="imgs/naruto1.jpg" alt="pics">
+                </div>
+
+            </li>
+            <li>
+                <div class="phos">
+                    <img src="imgs/hunter.jpg" alt="pics">
+                    <img src="imgs/tv2.jpg" alt="pics">
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

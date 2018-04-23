@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件--改变窗口大小</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: orange;
+            top: 200px;
+            left:500px;
+        }
+    </style>
+    <script src="scripts/改变窗口宽度.js"></script>
+    <script>
+        //如果元素设置有边距,那会有bug,因为offsetLeft得到的是没有边距的距离,若元素有边距,则会在新位置生成边距而偏离
+        window.onload = function () {
+        var oDiv=document.getElementById('div1');
+          changeBulk(oDiv);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="div1"></div>
+</body>
+
+</html>

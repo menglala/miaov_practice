@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS热身运动</title>
+    <style type="text/css">
+    .header strong {
+        font: bold;
+        display: inline-block;
+    }
+
+    .header button {
+        background: red;
+        color: white;
+    }
+    .box{
+    	width: 100px;
+    	height: 100px;
+    	background: yellow;
+    	border: 2px solid black;
+    }
+    .setting{
+    	width: 300px;
+    	position: fixed;
+    	left: 40%;
+    	top: 40%;
+    	padding: 30px;
+    	border: 1px solid #E7E1E1;
+    	display: none;
+
+    }
+    .color p, .width p, .height p{
+    	display: inline-block;
+    	width: 100px;
+    } 
+    .color p {
+    	display: inline-block;
+    	width: 100px;
+    }
+    #red{
+    	background: red;
+    	color: #fff;
+    }
+    #yellow{
+        background: yellow;
+        color: black;
+    }
+    #blue{
+    	background: blue;
+    	color: #fff;
+    }
+    .reset_sure button{
+    	background: #503AC0;
+    	color: #fff;
+        margin-left: 50px; 
+    }
+
+    </style>
+    <script type="text/javascript" src="scripts/JS热身运动.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <strong>请为下面的DIV设置样式:</strong>
+        <button id ="btn">点击设置</button>
+    </div>
+    <div class="box" id="box"></div>
+    <div class="setting" id="setting">
+        <div class="color">
+            <p>请选择颜色：</p>
+            <button id="red">红</button>
+            <button id="yellow">黄</button>
+            <button id="blue">蓝</button>
+        </div>
+        <div class="width">
+            <p>请选择宽度：</p>
+            <button id="width_200">200</button>
+            <button id="width_300">300</button>
+            <button id="width_400">400</button>
+        </div>
+        <div class="height">
+            <p>请选择高度：</p>
+            <button id="height_200">200</button>
+            <button id="height_300">300</button>
+            <button id="height_400">400</button>
+        </div> 
+        <div class="reset_sure">
+        	<button id="reset">恢复</button>
+        	<button id="sure">确定</button>
+        </div>       
+    </div>
+</body>
+
+</html>

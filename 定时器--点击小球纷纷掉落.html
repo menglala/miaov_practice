@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--点击小球纷纷掉落</title>
+    <style>
+        .box {
+            margin: 10px auto;
+            background-color: wheat;
+            width: 500px;
+            height: 1000px;
+            position: relative;
+        }
+
+        #list {
+            padding: 0;
+        }
+
+        #list li {
+            position: absolute;
+            list-style: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 90px;
+            display: inline-block;
+            background: url(imgs/tv5.jpg);
+            margin: 10px;
+        }
+    </style>
+    
+    <script>
+        //我的做法:
+        window.onload = function () {
+            var oUl = document.getElementById('list'),
+                aLi = oUl.getElementsByTagName('li'),
+                flag = true,
+                arrImg = ['imgs/pic1.jpg', 'imgs/kikyou1.jpg', 'imgs/kikyou4.jpg', 'imgs/kikyou3.jpg', 'imgs/kikyou2.jpg'];
+
+            function doMove2(obj, attr, speed, target, enFnd) {
+                speed = parseInt(getStyle(obj, attr)) > target ? -speed : speed;
+                clearInterval(obj.timer2);
+                obj.timer2 = setInterval(function () {
+                    var pos = parseInt(getStyle(obj, attr)) + speed;
+                    if ((pos > target && speed > 0) || (pos < target && speed < 0)) {
+                        pos = target;
+                    }
+                    obj.style[attr] = pos + "px";
+                    if (pos == target) {
+                        clearInterval(obj.timer2);
+                        enFnd && enFnd();
+                    }
+                }, 30);
+            }
+
+            for (let i = 0; i < aLi.length; i++) {
+                aLi[i].index = i;
+                aLi[i].style.left = 40 + (i % 5) * 80 + 'px';
+                aLi[i].style.top = 10 + Math.floor(i / 5) * 80 + 'px';
+                aLi[i].style.background = 'url(' + arrImg[i % 5] + ')';
+
+                aLi[i].onmouseover = function () {
+                    if (flag == false) return;
+                    var _this = this;
+                    this.style.top = parseInt(getStyle(this, 'top')) - 10 + 'px';
+                    this.style.left = parseInt(getStyle(this, 'left')) - 10 + 'px';
+                    doMove(_this, 'width', 10, 90);
+                    doMove2(_this, 'height', 10, 90);
+
+                }
+                aLi[i].onmouseout = function () {
+                    if (flag == false) return;
+                    var _this = this;
+                    this.style.top = parseInt(getStyle(this, 'top')) + 10 + 'px';
+                    this.style.left = parseInt(getStyle(this, 'left')) + 10 + 'px';
+                    doMove(_this, 'width', 10, 70);
+                    doMove2(_this, 'height', 10, 70);
+                }
+
+                aLi[i].onclick = function () {
+                    if (flag == false) {
+                        return;
+                    }
+                    flag = false;
+                    var _this = this;
+                    var num = parseInt(this.index);
+                    shake(this, 'left', function () {
+                        target = parseInt(getStyle(_this, 'top')) + 510;
+                        doMove(_this, 'top', 20, target, function () {
+                            _this.style.left = 40 + (i % 5) * 80 + 'px';
+                        });
+                    })
+
+                    for (let i = 0; i < aLi.length; i++) {
+                        var dis = Math.abs(parseInt(aLi[i].index) - num);
+
+                        if (dis !== 0) {
+                            aLi[i].timer1 = setTimeout(function () {
+                                shake(aLi[i], 'left', function () {
+                                    doMove(aLi[i], 'top', 20, parseInt(getStyle(aLi[i], 'top')) + 500, function () {
+                                        for (let i = 0; i < aLi.length; i++) {
+                                            aLi[i].style.width = 70 + 'px';
+                                            aLi[i].style.height = 70 + 'px';
+                                        }
+                                    });
+                                });
+                            }, 100 + dis * 50)
+                        }
+
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <ul id="list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+
+</html>

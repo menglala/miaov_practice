@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日期对象--图片时钟(翻页扩展版)</title>
+    <style>
+        #clock {
+            margin: 10px auto;
+            width: 600px;
+            padding: 0;
+            overflow: hidden;
+            height: 80px;
+            position: relative;
+        }
+
+        #clock li {
+            list-style: none;
+            display: inline-block;
+            height: 160px;
+            width: 60px;
+            position: absolute;
+        }
+
+        img {
+            width: 60px;
+            height: 80px;
+        }
+    </style>
+    <script src="scripts/日期转换函数(toWeek,toTwo).js"></script>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var oP = document.getElementsByTagName('p')[0],
+                oUl = document.getElementById('clock'),
+                aLi = oUl.getElementsByTagName('li'),
+                sTime = '',
+                str = '',
+                timer = null;
+
+            for (let i = 0; i < aLi.length; i++) {
+                aLi[i].style.left = 5 + i * 61 + 'px';
+            }
+
+            function fnTime() {
+                var iTime = new Date(),
+                    iYear = iTime.getFullYear(),
+                    iMon = iTime.getMonth(),
+                    iDay = iTime.getDay(),
+                    iDate = iTime.getDate(),
+                    iHour = iTime.getHours(),
+                    iMin = iTime.getMinutes(),
+                    iSec = iTime.getSeconds();
+
+                iHour = toTwo(iHour);
+                iMin = toTwo(iMin);
+                iSec = toTwo(iSec);
+                iDay = toWeek(iDay);
+                iMon = iMon + 1;
+                str = iYear + '年' + iMon + '月' + iDate + '日' + ' ' + iDay + iHour + ':' + iMin + ':' + iSec;
+                oP.innerHTML = str;
+
+                function flip(li, index) {
+                    var aImg = li.getElementsByTagName('img');
+
+                    sTime = iHour + ':' + iMin + ':' + iSec;
+                    if (sTime.charAt(index) == ':') {
+                        aImg[0].src = 'imgs/colon.JPG';
+                        setTimeout(function () {
+                            aImg[0].src = 'imgs/colon1.JPG';
+                        }, 500)
+                    } else {
+                        aImg[1].src = 'imgs/' + sTime.charAt(index) + '.jpg';
+                        if (aImg[0].src !== aImg[1].src) {
+                            doMove(li, 'top', 10, -80, function () {
+                                aImg[0].src = aImg[1].src;
+                                li.style.top = 0;
+                            })
+                        }
+                    }
+                }
+
+                for (let i = 0; i < aLi.length; i++) {
+                    flip(aLi[i], i);
+                }
+            }
+            fnTime();
+            timer = setInterval(fnTime, 1000);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <p></p>
+        <ul id="clock">
+            <li>
+                <img src="imgs/0.JPG" alt="time">
+                <img src="imgs/0.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/0.JPG" alt="time">
+                <img src="imgs/0.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/colon.JPG" alt="time">
+                <img src="imgs/colon.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/0.JPG" alt="time">
+                <img src="imgs/0.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/0.JPG" alt="time">
+                <img src="imgs/0.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/colon.JPG" alt="time">
+                <img src="imgs/colon.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/0.JPG" alt="time">
+                <img src="imgs/0.JPG" alt="time">
+            </li>
+            <li>
+                <img src="imgs/0.JPG" alt="time">
+                <img src="imgs/0.JPG" alt="time">
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

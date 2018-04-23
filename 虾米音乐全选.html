@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>虾米音乐歌曲全选</title>
+	<style>
+		li {
+			list-style: none;
+			border-top: 1px solid #eee;
+		}
+
+		.box {
+			width: 400px;
+			margin: 0 auto;
+		}
+
+		#list li {
+			line-height: 35px;
+			font-family: -webkit-pictograph;
+		}
+
+		.singer {
+			float: right;
+		}
+
+		button {
+			width: 80px;
+			margin-right: 8px;
+			opacity: 0.5;
+		}
+
+		#add {
+			background: url(imgs/add.png) no-repeat;
+		}
+
+		#fav {
+			margin-left: 25px;
+			background: url(imgs/favorite.png) no-repeat;
+		}
+
+		#delete {
+			background: url(imgs/delete.png) no-repeat;
+		}
+
+		p {
+			border-bottom: 2px solid #000;
+			height: 30px;
+			margin-left: 40px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var oUl = document.getElementById('list'),
+				aLi = oUl.getElementsByTagName('li'),
+				oInp = document.getElementById('all'),
+				aInp = oUl.getElementsByTagName('input'),
+				aBtn = document.getElementsByTagName('button'),
+				num = 0,
+				attrCol = ['rgb(247, 247, 247)', '#fff'];
+
+			for (var i = 0; i < aLi.length; i++) {
+				aLi[i].index = i;
+				aLi[i].style.background = attrCol[i % 2];
+				aLi[i].onmouseover = function () {
+					this.style.background = 'rgb(248, 255, 195)';
+				}
+				aLi[i].onmouseout = function () {
+					if (!aInp[this.index].checked) {
+						this.style.background = attrCol[this.index % 2];
+					}
+				}
+			}
+			//用一个变量num存储所有勾选的单选框
+			for (var i = 0; i < aInp.length; i++) {
+				aInp[i].index = i;
+				aInp[i].onclick = function () {
+					num = 0;//每次循环清空num,再重新计算num
+					if (this.checked == true) {
+						aLi[this.index].style.background = 'rgb(248,255,195)';
+					} else {
+						aLi[this.index].style.background = attrCol[this.index % 2];
+					}
+					for (var i = 0; i < aInp.length; i++) {
+						num += Number(aInp[i].checked);//利用number方法将checked为true转化为1,并一直叠加;为false则为0
+					}
+					if (!num) {
+						for (var j = 0; j < aBtn.length; j++) {
+							aBtn[j].style.opacity = '0.5';
+						}
+					} else {
+						for (let j = 0; j < aBtn.length; j++) {
+							aBtn[j].style.opacity = '1';
+						}
+					}
+
+					if (num == aInp.length) {
+						oInp.checked = true;
+					} else {
+						oInp.checked = false;
+					}
+				}
+
+			}
+
+			function selectAll() {
+				for (var i = 0; i < aLi.length; i++) {
+					aInp[i].checked = true;
+					aLi[i].style.background = 'rgb(248, 255, 195)';
+				}
+				for (var i = 0; i < aBtn.length; i++) {
+					aBtn[i].style.opacity = '1';
+				}
+			}
+
+			function removeAll() {
+				for (var i = 0; i < aLi.length; i++) {
+					aInp[i].checked = false;
+					aLi[i].style.background = attrCol[i % 2];
+				}
+				for (var i = 0; i < aBtn.length; i++) {
+					aBtn[i].style.opacity = '0.6';
+				}
+			}
+
+			oInp.onclick = function () {
+				if (this.checked) {
+					selectAll();
+				} else {
+					removeAll();
+				}
+			}
+
+		}
+
+	</script>
+</head>
+
+<body>
+	<div class="box">
+		<ul id="list">
+			<li>
+				<input type="checkbox" />
+				<span class="song">世界第一等</span>
+				<span class="singer">刘德华</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">路过蜻蜓</span>
+				<span class="singer">张国荣</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">Million Reason</span>
+				<span class="singer">Lady Gaga</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">绝望的笑容</span>
+				<span class="singer">刘德华</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">难念的经</span>
+				<span class="singer">周华健</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">Six Feet Under</span>
+				<span class="singer">Billie Eilish</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">Dearest</span>
+				<span class="singer">滨崎步</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">皇后大道东</span>
+				<span class="singer">罗大佑</span>
+			</li>
+			<li>
+				<input type="checkbox" />
+				<span class="song">Poison</span>
+				<span class="singer">Felicity</span>
+			</li>
+
+		</ul>
+		<p>
+			<input type="checkbox" name="checkbox" id="all" />
+			<span>全选</span>
+			<button id="fav">收藏</button>
+			<button id="add">添加</button>
+			<button id="delete">删除</button>
+		</p>
+	</div>
+</body>
+
+</html>

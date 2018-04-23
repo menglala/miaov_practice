@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>带缩略图的图片切换</title>
+    <style type="text/css">
+    .container {
+        position: relative;
+        width: 500px;
+        height: 600px;
+        margin: 0 auto;
+    }
+
+    #img1 {
+        width: 400px;
+        height: 500px;
+        overflow: hidden;
+        margin-top: 30px;
+    }
+
+    .container a {
+        position: absolute;
+        top: 265px;
+        width: 40px;
+        height: 40px;
+        font-size: 30px;
+        text-decoration: none;
+        border-radius: 40px;
+        line-height: 35px;
+        color: #fff;
+        background: #E9B557;
+        text-align: center;
+        opacity: 0.6;
+        filter: alpha(opacity:60);
+    }
+
+    #prev {
+        left: 0;
+    }
+
+    #next {
+        right: 100px;
+    }
+
+    .container a:hover {
+        opacity: 0.9;
+        filter: opacity(90);
+    }
+
+    ul {
+        position: absolute;
+        top: 530px;
+        left: 100px;
+    }
+
+    li {
+        list-style: none;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 40px;
+        background: #ccc;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .active {
+        background: #E9B557;
+    }
+
+    .mini {
+        overflow: hidden;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #fff;
+        top: -40px;
+        left: 5px;
+        display: none;
+    }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+        var oImg = document.getElementById('img1'),
+            oPrev = document.getElementById('prev'),
+            oUl = document.getElementById('list'),
+            oNext = document.getElementById('next'),
+            aLi = oUl.getElementsByTagName('li');
+        var num = 0;
+        var attrImg = ['imgs/pic1.jpg', 'imgs/pic2.jpg', 'imgs/pic3.jpg', 'imgs/pic4.jpg'];
+    //初始化           
+		function removeClass() {
+            for (var i = 0; i < aLi.length; i++) {
+                aLi[i].className = '';
+            }
+        }
+
+        for (var i = 0; i < aLi.length; i++) {
+
+            num = 0;
+            aLi[i].index = i;
+            aLi[i].innerHTML = ' <img class="mini" src="#"/> ';
+
+            aLi[i].onclick = function() {
+                removeClass();
+                num = this.index;
+                oImg.src = attrImg[this.index];
+                this.className = 'active';
+            }
+
+            aLi[i].onmouseover = function() {
+                this.getElementsByTagName('img')[0].style.display = 'block';
+                this.getElementsByTagName('img')[0].src = attrImg[this.index];
+            }
+            aLi[i].onmouseout = function() {
+                this.getElementsByTagName('img')[0].style.display = 'none';
+                this.getElementsByTagName('img')[0].src = attrImg[this.index];
+            }
+
+        }
+
+        oPrev.onclick = function() {
+        
+            if (num == 0) {
+                num = attrImg.length - 1;
+            }else{
+            	num--;
+            }
+            oImg.src = attrImg[num];
+            removeClass();
+            aLi[num].className = 'active';
+        }
+        oNext.onclick = function() {
+        	
+            if (num == attrImg.length - 1) {
+                num = 0;
+            }else{
+            	num++;
+            }
+            oImg.src = attrImg[num];
+            removeClass();
+            aLi[num].className = 'active';
+        }
+    }
+    </script>
+
+    <body>
+        <div class='container'>
+            <img id='img1' src='imgs/pic1.jpg' />
+            <a id="prev" href="#"><</a>
+            <a id="next" href="#">></a>
+                <ul id="list">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+        </div>
+    </body>
+
+</html>

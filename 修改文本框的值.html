@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>修改文本框的值</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#container{
+			width: 400px;
+
+		}
+		h4{
+			background: #2EC238;
+			color: #fff;
+			line-height: 30px;
+			padding-left: 8px;
+		}
+		li{
+			border-bottom: 1px solid #eee;
+		}
+		.p_txt{
+			line-height: 40px;
+			color: grey;
+			padding-left: 6px;
+			display: inline-block;
+		}
+		img{
+			width: 15px;
+			height: 15px;
+			cursor: pointer;
+		}
+		input{
+		    line-height: 25px;
+		    font-size: 15px;
+		    margin: 8px;
+		    display: none;
+
+		}
+		button{
+			font-weight: bold;
+		    color: #fff;
+		    background: #2EC238;
+		    border: none;
+		    line-height: 20px;
+		    width: 40px;
+		    display: none;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oUl=document.getElementById('list'),
+				aLi=oUl.getElementsByTagName('li');
+
+			function changText(id){
+				var oP=id.getElementsByTagName('p') [0],
+					oImg=id.getElementsByTagName('img')[0],
+					oInput=id.getElementsByTagName('input')[0],
+					oBtn1=id.getElementsByTagName('button')[0],
+					oTxt,
+					oBtn2=id.getElementsByTagName('button')[1];
+
+				oImg.onclick=function(){
+					oP.style.display='none';
+					oImg.style.display='none';
+					oInput.style.display='inline-block';
+					oBtn1.style.display='inline-block';
+					oBtn2.style.display='inline-block';
+				}
+				oBtn1.onclick=function(){
+					oTxt=oInput.value;
+					oP.style.display='inline-block';
+					oP.innerHTML=oTxt;
+					oImg.style.display='inline-block';
+					oBtn1.style.display='none';
+					oBtn2.style.display='none';
+					oInput.style.display='none';
+				}
+				oBtn2.onclick=function(){
+					oP.style.display='inline-block';
+					oImg.style.display='inline-block';
+					oBtn1.style.display='none';
+					oBtn2.style.display='none';
+					oInput.style.display='none';
+				}
+			}
+
+			for (var i = 0; i < aLi.length; i++) {
+				changText(aLi[i]);
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="container">
+		<h4>分类名称</h4>
+		<ul id="list">
+			<li>
+				<p class="p_txt">小梦学习课堂</p>
+				<img src="imgs/pen.png">
+				<input type="text" value="小梦学习课堂">
+				<button>保存</button>
+				<button>取消</button>
+			</li>
+			<li>
+				<p class="p_txt">小梦学习课堂</p>
+				<img src="imgs/pen.png">
+				<input type="text" value="小梦学习课堂">
+				<button>保存</button>
+				<button>取消</button>
+			</li>
+		</ul>
+		
+	</div>
+</body>
+</html>

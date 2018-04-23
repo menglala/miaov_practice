@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM--固定的登录框</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrap {
+            height: 1500px;
+        }
+
+        #login {
+            z-index: 2;
+            position: absolute;
+            width: 300px;
+            height: 60px;
+            display: none;
+            background-color: #fff;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        p {
+            display: inline-block;
+        }
+
+        #login span {
+            font-weight: bold;
+            float: right;
+            cursor: pointer;
+        }
+
+        button {
+            position: absolute;
+            z-index: 0;
+        }
+
+        .backgd {
+            z-index: 1;
+            background-color: #eee;
+            height: 1500px;
+            width: 100%;
+            position: absolute;
+            display: none;
+            opacity: 0.6;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oBtn = document.getElementsByTagName('button')[0],
+                oBackgd = document.getElementsByClassName('backgd')[0],
+                oLogin = document.getElementById('login'),
+                oClose = document.getElementsByTagName('span')[0];
+
+            function alertLogin() {
+                oLogin.style.display = oBackgd.style.display = 'block';
+                var scrollTop = document.body.scrollTop || document.documentElement.scrollTop,
+                    scrollLeft = document.body.scrollLeft || document.documentElement.scrollLeft,
+                    clientHeight = document.documentElement.clientHeight,
+                    clientWidth = document.documentElement.clientWidth;
+
+                oLogin.style.top = (clientHeight - oLogin.offsetHeight) / 2 + scrollTop + 'px';
+                oLogin.style.left = (clientWidth - oLogin.offsetWidth) / 2 + scrollLeft + 'px';
+            }
+            oBtn.onclick = function () {
+                alertLogin();
+                window.onscroll = alertLogin;
+                window.onresize = alertLogin;
+            }
+            oClose.onclick = function () {
+                oLogin.style.display = oBackgd.style.display = 'none';
+                window.onscroll = null;
+                window.onresize = null;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <button>登录</button>
+        <div class="backgd"></div>
+        <div id="login">
+            <p>哈喽~~~请输入你的用户名和密码</p>
+            <span>×</span>
+        </div>
+    </div>
+</body>
+
+</html>

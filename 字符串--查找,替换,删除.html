@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符串--查找，替换，删除</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        span {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: wheat;
+        }
+
+        body {
+            background-color: #eee;
+        }
+
+        .container {
+            margin: 30px auto;
+            width: 750px;
+
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #text {
+            width: 500px;
+            display: inline-block;
+            background-color: white;
+            padding: 20px;
+            font-family: cursive;
+        }
+
+        #btn {
+            list-style: none;
+            float: right;
+            margin-right: 148px;
+        }
+
+        #btn li {
+            background-color: #bfbdbc;
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+            font-family: fantasy;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .search_Replace {
+            margin: 20px;
+            width: 500px;
+            background-color: #bfc6cc;
+            height: 100px;
+            display: none;
+        }
+
+        #close {
+            border-radius: 90px;
+            float: right;
+        }
+
+        #tab {
+            padding: 5px 20px;
+            height: 30px;
+            border-bottom: 2px solid #fff;
+        }
+
+        #tab li {
+            display: inline-block;
+            padding: 5px 20px;
+            background-color: #e6e1e0;
+            cursor: pointer;
+            font-family: fantasy;
+            font-weight: 700;
+        }
+
+        .search {
+            position: absolute;
+            height: 30px;
+        }
+
+
+        .search_Replace input {
+            height: 20px;
+            width: 200px;
+        }
+
+        .search_Replace button {
+            width: 50px;
+            height: 30px;
+        }
+
+        .search,
+        .replace {
+            margin: 10px 15px;
+
+        }
+
+        .replace {
+            display: none;
+        }
+
+        #btn :hover {
+            background-color: #ec7650;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oP = document.getElementById('text'),
+                oBtn = document.getElementById('btn'),
+                aBtn = oBtn.getElementsByTagName('li'),
+                oTool = document.getElementsByClassName('search_Replace')[0],
+                aTab = document.getElementById('tab').getElementsByTagName('li'),
+                oSearch = document.getElementsByClassName('search')[0],
+                oReplace = document.getElementsByClassName('replace')[0],
+                text_search = document.getElementById('searchText'),
+                oldText = document.getElementById('oldText'),
+                newText = document.getElementById('replaceText'),
+                btn_search = document.getElementById('searchBtn'),
+                btn_replace = document.getElementById('replaceBtn');
+
+            function btnTab(flag) {
+                for (let i = 0; i < aBtn.length; i++) {
+                    if (flag == true) {
+                        aBtn[i].style.display = 'block';
+                    } else {
+                        aBtn[i].style.display = 'none';
+                        aBtn[0].style.display = 'block';
+                    }
+                }
+            }
+
+            function textTab(b) {
+                if (b == true) {
+                    oSearch.style.display = 'block';
+                    oReplace.style.display = 'none';
+                } else {
+                    oSearch.style.display = 'none';
+                    oReplace.style.display = 'block'
+                }
+            }
+            function btnLight() {
+                for (let i = 0; i < aTab.length; i++) {
+                    aTab[i].style.backgroundColor = '#e6e1e0';
+                }
+            }
+
+            btnTab(false);
+            aBtn[0].onclick = function () {
+                btnTab(true);
+            }
+            aBtn[1].onclick = function () {
+                btnTab(false);
+                oTool.style.display = 'block';
+                textTab(true);
+                btnLight();
+                aTab[0].style.backgroundColor='white';
+            }
+            aBtn[2].onclick = function () {
+                btnTab(false);
+                oTool.style.display = 'block';
+                textTab(false);
+                btnLight();
+                aTab[1].style.backgroundColor='white';
+            }
+            aTab[0].onclick = function () {
+                textTab(true);
+                btnLight();
+                this.style.backgroundColor = 'white';
+            }
+            aTab[1].onclick = function () {
+                textTab(false);
+                btnLight();
+                this.style.backgroundColor = 'white';
+            }
+            aTab[2].onclick = function () {
+                oTool.style.display = 'none';
+            }
+            btn_search.onclick = function () {
+                oP.innerHTML = oP.innerHTML.split(text_search.value).join('<span>' + text_search.value 
+                + '</span>');
+                text_search.value = '';
+            }
+            btn_replace.onclick = function () {
+                if (newText.value == '') {
+                    alert('你确认要删除输入的内容吗?');
+                    oP.innerHTML = oP.innerHTML.split(oldText.value).join('');
+                } else {
+                    oP.innerHTML = oP.innerHTML.split(oldText.value).join(newText.value);
+                }
+                newText.value = oldText.value = '';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <p id="text">宇智波鼬代表的是日本神话中天照大御神的使者八咫鸦，（在日本传说中三只脚的乌鸦， 具有忠贞、 
+            勇敢、无畏精神，同时也是中国古代传说中被后羿射日射下来的太阳神鸟）也可以是天照大御神本人！ 
+            鼬总是释放乌鸦幻术，（为了纪念宇智波止水）并且也使用的耗费查克拉少量的乌鸦分身。在日本神话中，
+            现世的管理者是天照大御神，常世的管理者是月读命，素盏鸣尊（须佐之男）曾凭十拳剑斩杀八岐大蛇， 
+            从其尾部抽出草薙剑。但是，须佐之男并没有八咫镜，八咫镜是天照大御神的。 宇智波鼬正是八咫鸦的化身， 
+            秽土转生状态下扭转了战局，并且以自己的方式引导着第四次忍界大战走向胜利。
+        </p>
+        <ul id="btn">
+            <li>展开</li>
+            <li>查找</li>
+            <li>替换</li>
+        </ul>
+        <div class="search_Replace">
+            <ul id="tab">
+                <li>查找</li>
+                <li>替换</li>
+                <li id="close">×</li>
+            </ul>
+            <div class="search">
+                <input type="text" name="search" id="searchText">
+                <button id="searchBtn">查找</button>
+            </div>
+            <div class="replace">
+                <input type="text" id="oldText">
+                <input type="text" name="replaceText" id="replaceText">
+                <button id="replaceBtn">替换</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

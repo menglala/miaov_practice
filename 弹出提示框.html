@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹出提示框</title>
+	<style type="text/css">
+	    #list{
+	    	width: 500px
+	    }
+		#list li{
+			width: 100px;
+			height: 120px;
+			border: 1px solid black;
+			position: relative;
+			list-style: none;
+			display: inline-block;
+		}
+		#list li span{
+			width: 100px;
+			position: absolute;
+			bottom: 0;
+			border-top: 2px solid #000;
+
+		}
+		.popup{
+			position: absolute;
+		    left: 20px;
+			top: -10px; 
+			width: 150px;
+			height: 80px;
+			background: #5B51EF;
+			text-align: center;
+			line-height: 80px; 
+			display: none;            
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oUl=document.getElementById('list'),
+			    aLi=oUl.getElementsByTagName('li'),
+			//    aDiv=oUl.getElementsByTagName('div');
+			left=null;
+			top=null;
+			
+
+			for (var i = 0; i < aLi.length; i++) {
+				aLi[i].onmouseover=function(){
+
+					this.getElementsByTagName('div')[0].style.display='block';
+				}
+				aLi[i].onmouseout=function(){
+					this.getElementsByTagName('div')[0].style.display='none';
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="list">
+    <li>
+        <span>说明1</span>
+        <div class="popup" display="none">弹窗1</div>
+    </li>
+    <li>
+        <span>说明2</span>
+        <div class="popup" display="none">弹窗2</div>
+    </li>
+    <li>
+        <span>说明3</span>
+        <div class="popup" display="none">弹窗3</div>
+    </li>
+    <li><span>说明4</span>
+        <div class="popup" display="none">弹窗4</div>
+    </li>
+    <li><span>说明5</span>
+        <div class="popup" display="none">弹窗5</div>
+    </li>
+    <li><span>说明6</span>
+        <div class="popup" display="none">弹窗6</div>
+    </li>
+    <li><span>说明7</span>
+        <div class="popup" display="none">弹窗7</div>
+    </li>
+    <li><span>说明8</span>
+        <div class="popup" display="none">弹窗8</div>
+    </li>
+    <li><span>说明9</span>
+        <div class="popup" display="none">弹窗9</div>
+    </li>
+    <li><span>说明10</span>
+        <div class="popup" display="none">弹窗10</div>
+    </li>
+    <li><span>说明11</span>
+        <div class="popup" display="none">弹窗11</li>
+    <li><span>说明12</span>
+        <div class="popup" display="none">弹窗12</div>
+    </li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自动生成V字</title>
+	<style type="text/css">
+	ul {
+        position: relative;
+    }
+
+    li {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        font: bold 26px black;
+        text-align: center;
+        line-height: 50px;
+        list-style: none;
+        display: inline-block;
+        position: absolute;
+        background: red;
+    }
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+		    var oBtn = document.getElementById('btn');
+	        var oUl = document.getElementById('list');
+	        var aLi = oUl.getElementsByTagName('li');
+	        str='';
+            flag = true;
+
+            oBtn.onclick=function(){
+            	if (flag) {
+            	   for (var i = 0; i < 5; i++) {
+
+            		str += '<li>' + i + '</li>';
+            	}
+            	oUl.innerHTML = str;
+            	flag=false;
+            }
+            	//再使用一个for循环是因为必须等到oUl里的li加载完才可以读取，要放在oUl的下面
+                for (var i = 0; i < 5; i++) {
+                	aLi[i].style.left=i*50+'px';
+                	if (i<aLi.length/2) {
+                		aLi[i].style.top=i*50+'px';
+                	}else{
+                		aLi[i].style.top=(aLi.length-i-1)*50+'px';
+                	}
+                
+                }
+            	
+           }
+		}
+	</script>
+</head>
+<body>
+	<button id="btn">自动生成一个V字形 </button>
+	<ul id="list"></ul>
+</body>
+</html>

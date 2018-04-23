@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM--关键字详情框提示</title>
+    <style>
+        .box {
+            width: 500px;
+            margin: 10px auto;
+
+        }
+
+        p {
+            margin-top: 400px;
+        }
+
+        span {
+            position: relative;
+            color: orange;
+            cursor: pointer;
+        }
+
+        .title {
+            width: 400px;
+            color: black;
+            position: absolute;
+            background-color: rgb(243, 213, 174);
+            padding: 5px;
+        }
+    </style>
+    <script>
+        var aData = {
+            '罗杰': " 被全世界尊称为“海贼王”，拥有财富、名声、权势的海贼，是史上第一也是唯一完成“伟大航路”的罗杰海贼团的船长；亦是传说中的大秘宝“ONE PIECE”的拥有者  ",
+            'op': "“想要我的财宝吗？想要的话可以全部给你，去找吧！我把所有财宝都放在那里。”，使许多海盗为了争夺“One Piece”而开始树立霸权、极力争夺，而形成了“大海贼时代”",
+            'luffy': "蒙奇·D·路飞，日本漫画《航海王》的主角，草帽海贼团、草帽大船团船长，极恶的世代之一。橡胶果实能力者，悬赏金5亿贝里。梦想是找到传说中的One Piece，成为海贼王。",
+            'shanks': "香克斯，日本漫画《海贼王》及其衍生作品中的角色，外号“红发”。伟大航路后半段“新世界”的“四皇”之一，原为罗杰海贼团的实习生，后自己成立海贼团，经过自己不断的努力与变强，最终成为了四皇。拥有强大的霸王色霸气，也精于剑术。同时也是主角路飞从小就尊敬的人 ",
+            'comic': "《ONE PIECE》（中文译名：海贼王）是一部连载中的日本少年漫画作品，作者为尾田荣一郎，内容为描述主角蒙奇·D·路飞想要得到“ONE PIECE”和成为“海贼王”的故事。"
+        }
+    </script>
+    <script src="scripts/到浏览器的绝对位置函数(getPos).js"></script>
+    <script>
+        //document.body.scroll和document.body.clientHeight应用
+        window.onload = function () {
+            var aSpan = document.getElementsByTagName('span');
+
+            for (let i = 0; i < aSpan.length; i++) {
+                aSpan[i].index = i;
+                aSpan[i].onmouseover = function () {
+                    var oTip = document.createElement('div');
+                    oTip.innerHTML = aData[this.title];
+                    oTip.className = 'title';
+                    this.appendChild(oTip);
+                    tipPos(this.index);
+                }
+                aSpan[i].onmouseout = function () {
+                    this.removeChild(this.children[0]);
+                }
+            }
+
+            function tipPos(idx) {
+                var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                var clientHeight = document.documentElement.clientHeight;
+                var pos = getPos(aSpan[idx].children[0]);
+                // console.log(pos.top+50);//649
+                //console.log(clientHeight);//637
+                //console.log(scrollTop);//0
+                //如果提示框超出网页可视区,则将其显示在上面
+                if (pos.top + 50 > scrollTop + clientHeight) {
+                    aSpan[idx].children[0].style.top = '-100px';
+                }
+            }
+ 
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <p>传奇海盗
+            <span title="罗杰">哥尔•D•罗杰</span> 哥尔•D•罗杰在临死前曾留下关于其毕生的财富
+            <span title="op">“One Piece”</span>“One Piece” 的消息，由此引得群雄并起，众海盗们为了这笔传说中的巨额财富展开争夺，各种势力、政权不断交替，整个世界进入了动荡混乱的 “大海贼时代”。生长在东海某小村庄的
+            <span title="luffy">路飞</span> 受到海贼
+            <span title="shanks">香克斯</span>的精神 指引，决定成为一名出色的 海盗。为了达成这个目标，并找到万众瞩目的One Piece，路飞踏上艰苦的旅程。一路上他遇到了无数磨难，也结识了索隆、娜美 、乌索普、香吉、罗宾等一众性格各异的好友。他们携手一同展开充满传奇色彩的大冒险……本片根据日本漫画家尾田荣一郎超人气
+            漫画原作
+            <span title="comic">《One Piece》</span>改编.</p>
+    </div>
+</body>
+
+</html>

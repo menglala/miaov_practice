@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>cookie</title>
+    <style>
+        #div1 {
+            height: 100px;
+            width: 100px;
+            background: #fe6601;
+            position: absolute;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var aInp = document.getElementsByTagName('input'),
+                oBtn = document.getElementById('submit');
+
+            function setCookie(key, val, time) {
+                var oDate = new Date();
+                oDate.setDate(oDate.getDate() + time);  //getDate()以日期为单位,比如1即一天
+
+                document.cookie = key + '=' + val + ';expires=' + oDate.toGMTString();  //toGMTString()把日期对象转换为字符串日期
+            }
+
+            function removeCookie(key) {
+                setCookie(key, '', -1);
+            }
+
+            function getCookie(key) {
+                var arrCookie = document.cookie.split(';');
+
+                for (let i = 0; i < arrCookie.length; i++) {
+                    var arrKey = arrCookie[i].split('=');
+                    if (arrKey[0] == key) {
+                        return arrKey[1];
+                    }
+                }
+            }
+
+            oBtn.onclick = function () {
+                setCookie('username', aInp[0].value, 1);
+                removeCookie('password');
+                alert(getCookie('username'));
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <label for="username">用户名:</label>
+    <input type="text">
+    <label for="password">密码:</label>
+    <input type="password">
+    <button id="submit">提交</button>
+</body>
+
+</html>

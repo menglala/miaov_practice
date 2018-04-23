@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡里套选项卡(仿京东)</title>
+    <style type="text/css">
+    li {
+        list-style: none;
+    }
+
+    .box {
+        position: absolute;
+        background: #eee;
+    }
+
+    #list {
+        width: 120px;
+        display: inline-block;
+        position: absolute;
+    }
+
+    #list li {
+        width: 150px;
+        height: 120px;
+        text-align: center;
+        line-height: 110px;
+        background: #eee;
+        border-bottom: 1px solid #fff;
+        cursor: pointer;
+    }
+
+    #content {
+        position: absolute;
+        left: 190px;
+        display: inline-block;
+    }
+
+    #content ul {
+        position: absolute;
+        width: 492px;
+        padding: 0;
+    }
+
+    .show_pic {
+        display: none;
+    }
+
+    .pics {
+        width: 500px;
+        height: 500px;
+    }
+
+    #content li {
+        background: #eee;
+        opacity: 0.7;
+        font-weight: bold;
+        margin-left: -3px;
+        text-align: center;
+        width: 120px;
+        height: 50px;
+        display: inline-block;
+        border: 1px solid #fff;
+        line-height: 50px;
+        cursor: pointer;
+    }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+        var oUl = document.getElementById('list'),
+            aLi = oUl.getElementsByTagName('li'),
+            oCon = document.getElementById('content'),
+            aUl = oCon.getElementsByTagName('ul'),
+            num,
+            aImg = [
+                ['imgs/ipX.jpg', 'imgs/ip8.jpg', 'imgs/ip7.jpg', 'imgs/ip6.jpg'],
+                ['imgs/mix2.jpg', 'imgs/mi6.jpg', 'imgs/nova2s.jpg', 'imgs/mate10.jpg'],
+                ['imgs/s8+.jpg', 'imgs/s8.jpg', 'imgs/note8.jpg', 'imgs/XZP.jpg'],
+                ['imgs/X20.jpg', 'imgs/1+5t.jpg', 'imgs/s2.jpg', 'imgs/Z17.jpg']
+            ];
+
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].index = i;
+            aLi[i].onclick = function() {
+                for (var i = 0; i < aUl.length; i++) {
+                	//清空每个ul的样式名，隐藏每个ul
+                    aUl[i].className = 'show_pic';
+                }
+                for (var i = 0; i < aLi.length; i++) {
+                    aLi[i].style.background = '#eee';//所有li背景为灰
+                    this.style.background = '#fff';//当前背景为白色
+                    aUl[this.index].className = 'active';//该li对应的ul赋予样式名‘active’，并显示该ul
+                    num = this.index;//将当前li的索引赋给num
+                }
+            }
+        }
+
+        for (var i = 0; i < aUl.length; i++) {
+            tab(aUl[i]);
+        }
+
+        function tab(id) {
+            var aPic = id.getElementsByTagName('li');
+            for (var i = 0; i < aPic.length; i++) {
+                aPic[i].index = i;
+                aPic[i].onclick = function() {
+                    for (var i = 0; i < aUl.length; i++) {
+                        aPic[i].style.background = '#eee';
+                    }
+                    this.style.background = '#fff';
+                    id.getElementsByTagName('img')[0].src = aImg[num][this.index];
+                }
+            }
+
+        }
+
+    }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <ul id="list">
+            <li>苹果Apple</li>
+            <li>小米华为</li>
+            <li>三星索尼</li>
+            <li>其他品牌</li>
+        </ul>
+        <div id="content">
+            <ul class="active">
+                <img class="pics" src="imgs/ipX.jpg" />
+                <li>新品上市</li>
+                <li>热卖爆款</li>
+                <li>直降300</li>
+                <li>领券立减</li>
+            </ul>
+            <ul class="show_pic">
+                <img class="pics" src="imgs/mix2.jpg" />
+                <li>新品上市</li>
+                <li>热卖爆款</li>
+                <li>直降300</li>
+                <li>领券立减</li>
+            </ul>
+            <ul class="show_pic">
+                <img class="pics" src="imgs/s8+.jpg" />
+                <li>新品上市</li>
+                <li>热卖爆款</li>
+                <li>直降300</li>
+                <li>领券立减</li>
+            </ul>
+            <ul class="show_pic">
+                <img class="pics" src="imgs/X20.jpg" />
+                <li>新品上市</li>
+                <li>热卖爆款</li>
+                <li>直降300</li>
+                <li>领券立减</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

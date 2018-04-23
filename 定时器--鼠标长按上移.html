@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--鼠标长按上移</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 520px;
+            margin: 30px auto;
+            border: 1px solid #eee;
+            border-radius: 20px;
+        }
+
+        p {
+            background-color: #294A73;
+            color: white;
+            margin: 0;
+            line-height: 30px;
+            font-size: 15px;
+            padding-left: 8px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .more {
+            margin-left: 80px;
+            cursor: pointer;
+        }
+
+        #up,
+        #down {
+            text-align: center;
+            cursor: pointer;
+
+        }
+
+        #content {
+            width: 200px;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        #list {
+            padding: none;
+            position: relative;
+            top: 0;
+        }
+
+        #list img {
+            width: 80px;
+            height: 80px;
+        }
+
+        #list li {
+            list-style: none;
+            font-size: 14px;
+            margin-left: -20px;
+        }
+
+        #list span {
+            float: right;
+        }
+    </style>
+    <script src="scripts/getStyle.js"></script>
+    <script>
+        window.onload = function () {
+            var oUp = document.getElementById('up'),
+                oDown = document.getElementById('down'),
+                oUl = document.getElementById('list'),
+                speed = 0,
+                timerDown = null,
+                timerUp = null;
+
+            oUp.onmousedown = function () {
+                timerUp = setInterval(function () {
+                    speed = parseInt(getStyle(oUl, 'top'));
+                    if (speed > -320) {
+                        oUl.style.top = speed - 10 + 'px';
+                    } else {
+                        oUl.style.top = '-320px';
+                    }
+                }, 50);
+            }
+            oUp.onmouseup = function () {
+                clearInterval(timerUp);
+            }
+            oDown.onmousedown = function () {
+                timerDown = setInterval(function () {
+                    speed = parseInt(getStyle(oUl, 'top'));
+                    if (speed < 0) {
+                        oUl.style.top = speed + 10 + 'px';
+                    } else {
+                        oUl.style.top = 0;
+                    }
+                }, 50);
+            }
+            oDown.onmouseup = function () {
+                clearInterval(timerDown);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <p>排行榜
+            <span class="more">>>更多</span>
+        </p>
+        <div id="up">
+            <img src="imgs/up.png">
+        </div>
+        <div id="content">
+            <ul id="list">
+                <li>
+                    <img src="imgs/cpb.png" alt="cpb">
+                    <span>CPB 肌肤之钥眼霜 晶致眼霜15ml</span>
+                </li>
+                <li>
+                    <img src="imgs/Lancome.png" alt="cpb">
+                    <span>兰蔻（LANCOME）睛采眼部精华液20ml</span>
+                </li>
+                <li>
+                    <img src="imgs/xzp.png" alt="xzp">
+                    <span>雅诗兰黛（Estee Lauder）特润修护肌透精华露 50ml</span>
+                </li>
+                <li>
+                    <img src="imgs/sk2.png" alt="sk2">
+                    <span>SK-II PITERA"神仙水"晶透修护肌肤套装</span>
+                </li>
+                <li>
+                    <img src="imgs/olay.png" alt="cpb">
+                    <span>玉兰油Olay护肤套装博研诗Prox亮洁皙颜</span>
+                </li>
+                <li>
+                    <img src="imgs/Dr.png" alt="cpb">
+                    <span>蒂佳婷（Dr.Jart +）水动力活力水润面膜</span>
+                </li>
+            </ul>
+        </div>
+        <div id="down">
+            <img src="imgs/down.png">
+        </div>
+    </div>
+</body>
+
+</html>

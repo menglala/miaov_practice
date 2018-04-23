@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>验证QQ号输入</title>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oTxt=document.getElementById('txt1'),
+				oBtn=document.getElementById('btn1');
+
+			oBtn.onclick=function(){
+				if (oTxt.value=="") {
+					alert("请输入您的QQ号");
+					//isNaN方法只有非NaN的数字类型才会判断为false，其他数据类型和NaN均为true
+				}else if (isNaN(oTxt.value)) {
+					alert("请输入数字");
+					//parseInt和parseFloat方法转换的结果一样时说明为非小数
+				}else if (parseInt(oTxt.value)!==parseFloat(oTxt.value)) {
+					alert("输入的QQ号含小数，请重新输入");
+					//用charAt方法获取第一位子字符串，并判断是否为0；
+				}else if (oTxt.value.charAt(0)==0) {
+					alert("请输入非0开头的QQ号");
+				}else if (oTxt.value.length<5||oTxt.value.length>10) {
+					alert("请输入大于5位数并小于10位数的QQ号");
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<label>请输入QQ号：</label>
+	<input type="text" id="txt1" />
+	<input type="button" id="btn1" value="登录" />
+	<ul>
+		<li>有没有输入</li>
+		<li>输入的是不是数字</li>
+		<li>不能有0在前面</li>
+		<li>不能是小数</li>
+		<li>输入的数字必须在5位以上、10位以内</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件--模拟滚动条</title>
+    <style>
+        div {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #scroll {
+            width: 40px;
+            height: 550px;
+            border: 1px solid black;
+            position: relative;
+        }
+
+        #pos {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background-color: #eee;
+
+        }
+
+        .content {
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid black;
+            margin-left: 10px;
+        }
+
+        .text {
+            position: absolute;
+            margin: 0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var pos = document.getElementById('pos'),
+                scroll = document.getElementById('scroll'),
+                oContxt = document.getElementsByClassName('content')[0],
+                oText = document.getElementsByClassName('text')[0];
+            var ev = ev || event;
+
+            if (pos.setCapture) {
+                pos.setCapture();
+            }
+
+            pos.onmousedown = function (ev) {
+                var disY = ev.clientY - pos.offsetTop;   
+
+
+                //将鼠标移动动作处理函数添加给document,为了防止鼠标移动过快脱离div
+                document.onmousemove = function (ev) {
+                    var t = ev.clientY - disY;
+
+                    if (t < 0) {
+                        t = 0;
+                    } else if (t > scroll.clientHeight - pos.clientHeight) {
+                        t = scroll.clientHeight - pos.clientHeight; //这里用clientHeight是为了不计入边框
+                    }
+
+                    pos.style.top = t + "px";
+                    //解决文字选中被拖拽的浏览器默认行为和图片无法拖拽的默认行为
+                    //IE8以下用setCapture()全局捕获解决
+
+                    oText.style.top = (oContxt.clientHeight - oText.clientHeight) * (pos.offsetTop / (scroll.clientHeight - pos.clientHeight)) + 'px';
+                    //两个div嵌套,有内容的div在父容器中移动造成滚动内容的错觉.文本div的top值等于内容上移的最高点(oContxt.clientHeight - oText.clientHeight) * 滚动条当前距离的位置百分比(pos.offsetTop / (scroll.clientHeight - pos.clientHeight)) 
+                    
+                    return false;
+                };
+                document.onmouseup = function (ev) {
+                    document.onmousemove = document.onmouseup = null;
+                    if (pos.releaseCapture) {
+                        pos.releaseCapture();
+                    }
+                };
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <div id="scroll">
+        <div id="pos"></div>
+    </div>
+    <div class="content">
+        <p class="text">《海贼王》（ONE PIECE），也称航海王，是一部于1997年起在日本漫画杂志《周刊少年Jump》（集英社）连载的日本少年漫画作品，作者为尾田荣一郎。 故事讲述主角蒙奇·D·路飞为了要实现与「红发」香克斯的约定而出海，在遥远的路途上找寻着志同道合的伙伴，一起进入「伟大航道」，目标当上「海贼王」。
+            可参阅维基词条「ONE PIECE 」。《海贼王》（ONE PIECE），也称航海王，是一部于1997年起在日本漫画杂志《周刊少年Jump》（集英社）连载的日本少年漫画作品，作者为尾田荣一郎。 故事讲述主角蒙奇·D·路飞为了要实现与「红发」香克斯的约定而出海，在遥远的路途上找寻着志同道合的伙伴，一起进入「伟大航道」，目标当上「海贼王」。
+            可参阅维基词条「ONE PIECE 」。《海贼王》（ONE PIECE），也称航海王，是一部于1997年起在日本漫画杂志《周刊少年Jump》（集英社）连载的日本少年漫画作品，作者为尾田荣一郎。 故事讲述主角蒙奇·D·路飞为了要实现与「红发」香克斯的约定而出海，在遥远的路途上找寻着志同道合的伙伴，一起进入「伟大航道」，目标当上「海贼王」。
+            可参阅维基词条「ONE PIECE 」。《海贼王》（ONE PIECE），也称航海王，是一部于1997年起在日本漫画杂志《周刊少年Jump》（集英社）连载的日本少年漫画作品，作者为尾田荣一郎。 故事讲述主角蒙奇·D·路飞为了要实现与「红发」香克斯的约定而出海，在遥远的路途上找寻着志同道合的伙伴，一起进入「伟大航道」，目标当上「海贼王」。
+            可参阅维基词条「ONE PIECE 」。《海贼王》（ONE PIECE），也称航海王，是一部于1997年起在日本漫画杂志《周刊少年Jump》（集英社）连载的日本少年漫画作品，作者为尾田荣一郎。 故事讲述主角蒙奇·D·路飞为了要实现与「红发」香克斯的约定而出海，在遥远的路途上找寻着志同道合的伙伴，一起进入「伟大航道」，目标当上「海贼王」。
+            可参阅维基词条「ONE PIECE 」。</p>
+    </div>
+</body>
+
+</html>

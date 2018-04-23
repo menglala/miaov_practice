@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--频道切换选项卡</title>
+    <style>
+        li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        .box {
+            margin: 50px auto;
+            width: 740px;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #select {
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        #select li {
+            border-left: 1px solid #eeeeee;
+            border-right: 1px solid #eee;
+            padding: 5px;
+            font-size: 12px;
+            margin-left: 20px;
+            width: 40px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .bigger img {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bigger span {
+            position: absolute;
+            top: 240px;
+            left: 50px;
+            font-family: cursive;
+        }
+
+        #books,
+        #cartoon {
+            position: absolute;
+            width: 600px;
+            height: 400px;
+        }
+
+        #cartoon {
+            display: none;
+        }
+
+        #booksList,
+        #cartoonList {
+            width: 2200px;
+            position: absolute;
+            top: 30px;
+            left: 240px;
+            z-index: 0;
+        }
+
+        #booksList li img,
+        #cartoonList li img {
+            width: 150px;
+            height: 120px;
+            position: relative;
+        }
+
+        #booksList li span,
+        #cartoon li span {
+            position: absolute;
+            top: 130px;
+            font-family: cursive;
+        }
+
+        .tab {
+            position: absolute;
+            left: 380px;
+        }
+
+        .prev,
+        .page,
+        .next {
+            display: inline-block;
+            padding: 0;
+        }
+
+        .page li {
+            width: 12px;
+            height: 12px;
+            border-radius: 50px;
+            background-color: #eee;
+        }
+
+        .page li :first-child {
+            background-color: wheat;
+        }
+
+        .prev,
+        .next {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #eee;
+            background-color: white;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var oSelt = document.getElementById('select'),
+                aSelt = oSelt.getElementsByTagName('li'),
+                oBookUl = document.getElementById('booksList'),
+                aDiv = document.getElementsByClassName('context'),
+                oCartnUl = document.getElementById('cartoonList'),
+                aPrev = document.getElementsByClassName('prev'),
+                aNext = document.getElementsByClassName('next'),
+                aPage = document.getElementsByClassName('page'),
+                aBookLi = aPage[0].getElementsByTagName('li'),
+                aCartnLi = aPage[1].getElementsByTagName('li'),
+                flag = 0,
+                obj1 = null,
+                obj2 = null,
+                dis = 0,
+                num = 0;
+
+            for (let i = 0; i < aSelt.length; i++) {
+                aSelt[i].index = i;
+                aSelt[i].onmouseover = function () {
+                    for (let i = 0; i < aSelt.length; i++) {
+                        aSelt[i].style.color = 'black';
+                    }
+                    this.style.color = 'red';
+                    for (let j = 0; j < aDiv.length; j++) {
+                        aDiv[j].style.display = 'none';
+                        aDiv[this.index].style.display = 'block';
+                    }
+                    flag == this.index;
+                }
+            }
+
+            aBookLi[0].style.backgroundColor = '#e8dc7c';
+            aCartnLi[0].style.backgroundColor = '#e8dc7c';
+            function enFnd() {
+                for (let i = 0; i < obj2.length; i++) {
+                    obj2[i].style.backgroundColor = '#eee';
+                }
+                obj2[num].style.backgroundColor = '#e8dc7c';
+            }
+
+            aPrev[flag].onclick = function () {
+                if (num == 0) {
+                    return;//return后面的代码不再读取
+                }
+                if (flag == 0) {
+                    obj1 = oBookUl;
+                    obj2 = aBookLi;
+                } else {
+                    obj1 = oCartnUl;
+                    obj2 = aCartnLi;
+                }
+                if(num==obj2.length-1) dis=0;
+                var target = 100 + dis * 100;
+                doMove(obj1, 'left', 10, target, function () {
+                    dis++;
+                    num--;
+                    enFnd();
+                })
+            }
+
+            aNext[flag].onclick = function () {
+                if (flag == 0) {
+                    obj1 = oBookUl;
+                    obj2 = aBookLi;
+                } else {
+                    obj1 = oCartnUl;
+                    obj2 = aCartnLi;
+                }
+
+                if (num == obj2.length - 1) {
+                    return;
+                }
+
+                var target = -(180 + num * 180);
+                doMove(obj1, 'left', 10, target, function () {
+                    num++;
+                    enFnd();
+
+                })
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+
+        <ul id="select">
+            <li>书籍</li>
+            <li>动漫</li>
+        </ul>
+
+        <div id="books" class="context">
+            <div class="bigger">
+                <img src="imgs/book1.PNG" alt="book">
+                <span>我们内心的冲突</span>
+            </div>
+            <ul id="booksList">
+                <li>
+                    <img src="imgs/book2.PNG" alt="book">
+                    <span>自由的夜行</span>
+                </li>
+                <li>
+                    <img src="imgs/book3.PNG" alt="book">
+                    <span>岛上书店</span>
+                </li>
+                <li>
+                    <img src="imgs/book4.PNG" alt="book">
+                    <span>刀锋</span>
+                </li>
+                <li>
+                    <img src="imgs/book5.PNG" alt="book">
+                    <span>少有人走的路</span>
+                </li>
+                <li>
+                    <img src="imgs/book6.PNG" alt="book">
+                    <span>区块链开发指南</span>
+                </li>
+                <li>
+                    <img src="imgs/book7.PNG" alt="book">
+                    <span>战天京</span>
+                </li>
+                <li>
+                    <img src="imgs/book8.PNG" alt="book">
+                    <span>晚清大变局</span>
+                </li>
+            </ul>
+
+            <div class="tab">
+                <div class="prev">
+                    < </div>
+                        <ul class="page">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <div class="next">></div>
+                </div>
+            </div>
+
+
+
+
+            <div id="cartoon" class="context">
+                <div class="bigger">
+                    <img src="imgs/tv1.jpg" alt="tv">
+                    <span>海贼王</span>
+                </div>
+                <ul id="cartoonList">
+                    <li>
+                        <img src="imgs/tv2.jpg" alt="tv">
+                        <span>全职猎人</span>
+                    </li>
+                    <li>
+                        <img src="imgs/tv3.jpg" alt="tv">
+                        <span>犬夜叉</span>
+                    </li>
+                    <li>
+                        <img src="imgs/tv4.jpg" alt="tv">
+                        <span>火影忍者</span>
+                    </li>
+                </ul>
+
+                <div class="tab">
+                    <div class="prev">
+                        < </div>
+                            <ul class="page">
+                                <li></li>
+                            </ul>
+                            <div class="next">></div>
+                    </div>
+
+                </div>
+            </div>
+</body>
+
+</html>

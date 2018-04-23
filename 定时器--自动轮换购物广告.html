@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--自动轮换购物广告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 500px;
+            height: 300px;
+        }
+
+        ul {
+            list-style: none;
+            display: inline-block;
+        }
+
+        #pics {
+            width: 200px;
+            height: 240px;
+        }
+
+        li {
+            width: 80px;
+            margin: 10px;
+            padding: 5px;
+            background-color: #a1bac5;
+            text-align: center;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var aLi = document.getElementsByTagName('li'),
+                oImg = document.getElementsByTagName('img')[0],
+                num = 0,
+                timer = null,
+                attrImg = ['imgs/book1.PNG', 'imgs/book2.PNG', 'imgs/book3.PNG', 'imgs/book4.PNG', 'imgs/book5.PNG',
+                    'imgs/book6.PNG', 'imgs/book7.PNG', 'imgs/book8.PNG', 'imgs/book9.PNG', 'imgs/book10.PNG'];
+
+            function autoPlay() {
+                checkAll();
+                aLi[num].style.backgroundColor = '#377a98';
+                aLi[num].style.color = 'white';
+                oImg.src = attrImg[num];
+
+                if (num < aLi.length / 2) {
+                    num++;
+                    if (num == aLi.length / 2) {
+                        num = aLi.length - 1;
+                    }
+                } else {
+                    num--;
+                    if (num == aLi.length / 2 - 1) {
+                        num = 0;
+                    }
+                }
+            }
+
+            function checkAll() {
+                for (let i = 0; i < aLi.length; i++) {
+                    aLi[i].style.backgroundColor = '#a1bac5';
+                    aLi[i].style.color = 'black';
+                }
+            }
+
+            for (let i = 0; i < aLi.length; i++) {
+                aLi[i].index = i;
+                aLi[i].onmouseover = function () {
+                    clearInterval(timer);
+                    checkAll();
+                    this.style.backgroundColor = '#377a98';
+                    this.style.color = 'white';
+                    oImg.src = attrImg[this.index];
+                }
+                aLi[i].onmouseout = function () {
+                    timer = setInterval(autoPlay, 1000);
+                }
+            }
+
+            timer = setInterval(autoPlay, 1000);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <ul id="left">
+            <li>心理学</li>
+            <li>散文</li>
+            <li>小说</li>
+            <li>外国文学</li>
+            <li>励志</li>
+        </ul>
+        <img src="imgs/book1.png" alt="书单" id="pics">
+        <ul id="right">
+            <li>科技</li>
+            <li>玄幻</li>
+            <li>历史</li>
+            <li>编程</li>
+            <li>文学</li>
+        </ul>
+    </div>
+</body>
+
+</html>

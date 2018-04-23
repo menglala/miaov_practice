@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组--图片排序,乱序</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrap {
+            margin: 20px auto;
+            width: 1050px;
+            height: 787px;
+            text-align: center;
+            background-color: #eee;
+        }
+
+        input {
+            margin: 10px 10px;
+            height: 32px;
+            width: 100px;
+            border-color: #eee;
+            background-color: #76adc5;
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        input:hover {
+            background-color: #9fcde2;
+        }
+
+        li {
+            list-style: none;
+            display: inline-block;
+            width: 280px;
+            text-align: center;
+            margin: 6px;
+            background-color: #fff;
+            border: 15px solid #fff;
+        }
+
+        li img {
+            width: 260px;
+            height: 170px;
+        }
+
+        li span {
+            display: inline-block;
+            color: #47a6d2;
+            font-weight: 700;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var aBtn = document.getElementsByTagName('input'),
+                oUl = document.getElementsByClassName('imgsList')[0],
+                aLi = oUl.getElementsByTagName('li'),//是一组HTML元素对象的集合!!不是数组,里面的每一项都是一个HTML
+                //元素的对象
+                flag = true,
+                randomArr = [],
+                str = '',
+                newArr = [];
+
+            for (let i = 0; i < aLi.length; i++) {
+                newArr.push(aLi[i]);
+                randomArr.push(aLi[i]);
+            }
+
+            aBtn[0].onclick = function () {
+                newArr.reverse();
+                str = '';
+                for (let i = 0; i < newArr.length; i++) {
+                    str += '<li>' + newArr[i].innerHTML + '</li>';
+                }
+                oUl.innerHTML = str;
+                this.value = flag == true ? '从小到大' : '从大到小';
+                flag = !flag;
+            }
+            aBtn[1].onclick = function () {
+                str = '';
+                randomArr.sort(function sortRandom(a, b) {
+                    return Math.random() - 0.5;
+                })
+                for (let i = 0; i < randomArr.length; i++) {
+                    str += '<li>' + randomArr[i].innerHTML + '</li>';
+                }
+                oUl.innerHTML = str;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <input type="button" value="从大到小">
+        <input type="button" value="随机排序">
+        <ul class="imgsList">
+            <li>
+                <img src="imgs/kikyou4.jpg" alt="imgs">
+                <span>1-桔梗</span>
+            </li>
+            <li>
+                <img src="imgs/tv3.jpg" alt="imgs">
+                <span>2-犬夜叉</span>
+            </li>
+            <li>
+                <img src="imgs/tv4.jpg" alt="imgs">
+                <span>3-宇智波鼬</span>
+            </li>
+            <li>
+                <img src="imgs/qyc.jpg" alt="imgs">
+                <span>4-犬夜叉-清</span>
+            </li>
+            <li>
+                <img src="imgs/onepiece.jpg" alt="imgs">
+                <span>5-海贼王</span>
+            </li>
+            <li>
+                <img src="imgs/itachi.jpg" alt="imgs">
+                <span>6-戴帽子的鼬</span>
+            </li>
+            <li>
+                <img src="imgs/hunter.jpg" alt="imgs">
+                <span>7-全职猎人</span>
+            </li>
+            <li>
+                <img src="imgs/naruto1.jpg" alt="imgs">
+                <span>8-火影忍者</span>
+            </li>
+            <li>
+                <img src="imgs/tv2.jpg" alt="imgs">
+                <span>9-绯色的幻影</span>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>鼠标移入显示小方格图片</title>
+	<style type="text/css">
+	#pic{
+		position: absolute;
+		overflow: hidden;
+		width: 486px;
+		height: 590px;
+	}	
+	#cover {
+		position: relative;
+		width: 517px;
+		height: 600px;
+		overflow: hidden;
+		background: transparent;
+		padding: 0;
+	}
+	#cover div{
+        width: 52px;
+        height: 52px;
+        display: inline-block;
+        background: #eee;
+        margin: -4px 0 0 0;
+        border: 1px solid #fff;
+    }
+
+	</style>
+
+	<script type="text/javascript">
+		//for和this的应用;
+		window.onload=function () {
+			var oCov=document.getElementById('cover'),
+				aDiv=oCov.getElementsByTagName('div');
+
+			str="";
+            
+            function addDiv(){
+
+				for (var i = 0; i < 100; i++) {
+					str+='<div></div>';
+				}
+				oCov.innerHTML=str;
+			}
+			addDiv();
+
+			for (var i = 0; i < aDiv.length; i++) {
+				aDiv[i].onmouseover=function(){
+					this.style.background="transparent";
+				}
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<img id="pic" src="imgs/pic.jpg">
+	<div id="cover"></div>
+</body>
+</html>

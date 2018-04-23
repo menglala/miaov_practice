@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符串--文字搬运工 </title>
+    <style>
+        .container {
+            margin: 20px auto;
+            width: 900px;
+        }
+
+        .center {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        button {
+            width: 150px;
+            line-height: 30px;
+            border-radius: 80px;
+            margin: 0 0 0 16px;
+
+        }
+
+        span {
+            position: relative;
+            top: 48px;
+            left: -100px;
+            font-size: 22px;
+        }
+
+        ul {
+            margin: 40px 15px;
+            display: none;
+        }
+
+        li {
+            list-style: none;
+            display: inline-block;
+            width: 7px;
+            height: 12px;
+            background-color: orange;
+        }
+
+        #rightText {
+            background-color: #ecf8fd
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oBtn = document.getElementsByTagName('button')[0],
+                text_left = document.getElementById('leftText'),
+                text_right = document.getElementById('rightText'),
+                oSpan = document.getElementsByTagName('span')[0],
+                oUl = document.getElementById('progress'),
+                aLi = oUl.getElementsByTagName('li'),
+                num = 0,
+                count = 0,
+                n = 0,
+                timer = null,
+                text = '';
+
+            oBtn.onclick = function () {
+                if (text_left.value == '') return alert('请输入你要转移的内容');
+                count = text_left.value.length;//获取输入字符串的长度
+                oUl.style.display = 'block';//显示进度条
+                text_right.value = '';//清空右边文字框
+                num = 0;
+                i = 0;
+                timer = setInterval(function () {
+                    text = text_left.value.charAt(0);//保存左边文字框的第一个字符
+                    text_left.value = text_left.value.slice(1);//截取第二个字符开始以后的字符串
+                    text_right.value += text;//将每次保存的新字符串的第一个字符转移到右边
+                    oSpan.innerHTML = num + '/' + count;
+                    num++;
+                    for (let i = 0; i < aLi.length; i++) {
+                        aLi[i].style.backgroundColor = 'orange';
+                        aLi[n].style.backgroundColor = 'red';
+                    }
+
+                    n == aLi.length - 1 ? n = 0 : n++;
+                    if (num -1 == count) {
+                        clearInterval(timer);
+                        oUl.style.display = 'none';
+                    }
+                }, 100)
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <textarea name="leftText" id="leftText" cols="40" rows="15"></textarea>
+        <div class="center">
+            <button>把文字右移</button>
+            <span>0/0</span>
+            <ul id="progress">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <textarea name="rightText" id="rightText" cols="40" rows="15"></textarea>
+    </div>
+</body>
+
+</html>

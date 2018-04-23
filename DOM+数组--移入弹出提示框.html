@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组+DOM--移入弹出框</title>
+    <style>
+        .box {
+            margin: 10px auto;
+            width: 900px;
+        }
+
+        .header {
+            border-bottom: 3px solid #EE7510;
+        }
+
+        .header span {
+            display: inline-block;
+            width: 80px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .active {
+            background-color: #EE7510;
+            color: white;
+            font-weight: bold;
+        }
+
+        ul {
+            padding: 0;
+            position: absolute;
+        }
+
+        li {
+            list-style: none;
+            text-decoration: underline;
+            cursor: pointer;
+            color: blue;
+            margin: 10px 5px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        li:hover {
+            color: red;
+        }
+
+        #PM_list {
+            display: none;
+        }
+
+        .tips {
+            width: 600px;
+            height: 150px;
+            border: 2px solid #EE7510;
+            position: relative;
+
+            padding: 5px;
+            display: none;
+        }
+
+        #arrow {
+            position: absolute;
+            top: 55px;
+            left: -10px;
+        }
+
+        .tips span,
+        .tips strong {
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+    <script>
+        var aData = [
+            {
+                'name': "技术",
+                'list': [
+                    {
+                        'title': "web前端开发",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "web前端开发",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦二层",
+                        'experience': "应届毕业生"
+                    },
+                    {
+                        'title': "java",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "java",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦二层A座",
+                        'experience': "一年以上开发经验"
+                    },
+                    {
+                        'title': "数据挖掘",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "数据挖掘",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦二层B座",
+                        'experience': "一至三年以上开发经验"
+                    },
+                    {
+                        'title': "区块链",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "区块链",
+                        'education': "研究生及以上",
+                        'location': "深圳南山腾讯大厦五层",
+                        'experience': "三年以上开发经验"
+                    },
+                    {
+                        'title': "PHP",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "PHP",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦三层",
+                        'experience': "应届毕业生"
+                    },
+                    {
+                        'title': "c++",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "c++",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦四层",
+                        'experience': "一至三年开发经验"
+                    },
+                    {
+                        'title': "全栈工程师",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "全栈工程师",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦六层",
+                        'experience': "三至五年以上开发经验"
+                    },
+                    {
+                        'title': "其他",
+                        'company': "深圳腾讯计算机有限公司",
+                        'position': "其他",
+                        'education': "本科及以上",
+                        'location': "深圳南山腾讯大厦一层",
+                        'experience': "应届毕业生"
+                    }
+                ]
+            },
+            {
+                'name': "产品",
+                'list': [
+                    {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    },
+                    {
+                        'title': "网页产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "网页产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部三层",
+                        'experience': "一年以上开发经验"
+                    },
+                    {
+                        'title': "移动产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "移动产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层B座",
+                        'experience': "一至三年以上开发经验"
+                    },
+                    {
+                        'title': "产品助理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品助理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层A座",
+                        'experience': "一至三年以上开发经验"
+                    },
+                    {
+                        'title': "游戏策划",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "游戏策划",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部六层B座",
+                        'experience': "三年以上开发经验"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }, {
+                        'title': "产品经理",
+                        'company': "杭州阿里巴巴网络科技有限公司",
+                        'position': "产品经理",
+                        'education': "本科及以上",
+                        'location': "杭州阿里巴巴滨江总部二层",
+                        'experience': "应届毕业生"
+                    }
+                ]
+            }
+        ]
+    </script>
+    <script src="scripts/到浏览器的绝对位置函数(getPos).js"></script>
+    <script>
+        //利用json数组存储的内容动态添加网页内容
+        window.onload = function () {
+            var oHeader = document.getElementsByClassName('header')[0],
+                oUl = document.getElementById('list'),
+                oTips = document.getElementsByClassName('tips')[0],
+                str = '';
+            //生成职位一级列表
+            for (let i = 0; i < aData.length; i++) {
+                str += '<span>' + aData[i].name + '</span>';
+                oHeader.innerHTML = str;
+                oHeader.children[0].className = 'active';
+            }
+
+            //点击切换职位列表
+            for (let i = 0; i < oHeader.children.length; i++) {
+                oHeader.children[i].index = i;
+                //事件调用函数时不要直接函数名加括号!!!!
+                oHeader.children[i].onclick = function () {
+                    createList(this.index);
+                    createTips(this.index);
+                    for (let i = 0; i < oHeader.childNodes.length; i++) {
+                        oHeader.children[i].className = '';
+                    }
+                    this.className = 'active';
+                }
+            }
+            createList(0);
+            createTips(0);
+            function createList(idx) {
+                oUl.innerHTML = '';
+                for (let i = 0; i < aData[idx].list.length; i++) {
+                    var oLi = document.createElement('li');
+                    oLi.innerHTML = aData[idx].list[i].title;
+                    oUl.appendChild(oLi);
+                }
+            }
+
+            function createTips(idx) {
+                var aLi = oUl.getElementsByTagName('li');
+                for (let i = 0; i < aLi.length; i++) {
+                    aLi[i].num = i;
+                    aLi[i].onmouseover = function () {
+                        oTips.innerHTML = '<img src="imgs/arrow.png" alt="arrowPic" id="arrow"><h2>'
+                            + aData[idx].list[this.num].company + '</h2>'
+                            + '<strong>职位:</strong><span>' + aData[idx].list[this.num].position + '</span>'
+                            + '<strong>学历:</strong><span>' + aData[idx].list[this.num].education + '</span><br>'
+                            + '<strong>工作地点:</strong><span>' + aData[idx].list[this.num].location + '</span>'
+                            + '<strong>工作经验:</strong><span>' + aData[idx].list[this.num].experience + '</span>';
+
+                        var pos = getPos(this);
+                        oTips.style.left = pos.left + this.offsetWidth + 'px';
+                        if (pos.top - 100 > document.body.scrollTop + document.documentElement.clientHeight   - 180) {
+                            oTips.style.top = document.body.scrollTop + document.documentElement.clientHeight -180+ 'px';
+                        } else {
+                            oTips.style.top = pos.top - 100 + 'px';
+                        }
+ 
+                        oTips.style.display = 'block';
+                    }
+                    aLi[i].onmouseout = function () {
+                        oTips.style.display = 'none';
+                    }
+                }
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="header">
+            <!-- <span>技术</span>
+            <span>产品经理</span> -->
+        </div>
+        <ul id="list">
+            <!-- <li>web前端开发</li>
+            <li>java</li>
+            <li>数据挖掘</li>
+            <li>区块链</li>
+            <li>PHP</li>
+            <li>c++</li>
+            <li>全栈工程师</li>
+            <li>其他</li> -->
+        </ul>
+        <div class="tips">
+            <!-- <img src="imgs/arrow.png" alt="arrowPic" id="arrow">
+            <h2>深圳腾讯计算机有限公司</h2>
+            <strong>职位:</strong>
+            <span>web前端开发</span>
+            <strong>学历:</strong>
+            <span>本科及以上</span>
+            <br>
+            <strong>工作地点:</strong>
+            <span>深圳南山</span>
+            <strong>工作经历:</strong>
+            <span>不限</span> -->
+        </div>
+    </div>
+</body>
+
+</html>

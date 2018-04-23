@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--点击图片渐变消失</title>
+    <style>
+        .container {
+            margin: 20px auto;
+            width: 300px;
+            height: 300px;
+            position: relative;
+            z-index: 1;
+        }
+
+        img {
+            width: 300px;
+            height: 200px;
+            position: absolute;
+            opacity: 1.0;
+            transition: 1s;
+        }
+
+        a {
+            position: absolute;
+            background-color: #759dbd;
+            border-radius: 100px;
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            text-align: center;
+            top: 75px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            z-index: 5;
+        }
+
+        #prv {
+            left: -50px;
+        }
+
+        #next {
+            left: 300px;
+        }
+
+        .warn {
+            display: none;
+            margin: -50px auto;
+            width: 300px;
+            border: 5px solid #312d2d;
+            text-align: center;
+            height: 100px;
+        }
+
+        .background {
+            z-index: 2;
+            position: absolute;
+            display: none;
+            left: 0;
+            top: 0;
+            z-index: 6;
+            background: #DCDBDC;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            width: 100%;
+            height: 100%;
+        }
+
+        .text {
+            z-index: 6;
+            position: absolute;
+            background-color: white;
+        }
+
+        .text p {
+            text-align: center;
+            width: 300px;
+            height: 45px;
+        }
+    </style>
+    <script src="scripts/getStyle.js"></script>
+    <script src="scripts/运动函数.js"></script>
+    <!-- <script>
+        window.onload = function () {
+            var oPrv = document.getElementById('prv'),
+                oNext = document.getElementById('next'),
+                oWarn = document.getElementsByClassName('warn')[0],
+                oBackgrd = document.getElementsByClassName('background')[0],
+                oSure = document.getElementById('sure'),
+                aImg = document.getElementsByTagName('img'),
+                timer = null,
+                alpha=1,
+                num = 3;
+
+            for (let i = 0; i < aImg.length; i++) {
+                aImg[i].index = i;
+            }
+
+    
+            oPrv.onclick = function () { 
+                changeOpacity(aImg[num],0.1,0);
+                doMove(aImg[num],'left',20,-300);
+                num>0&&num--;
+            }
+            oNext.onclick = function () {
+               changeOpacity(aImg[num], 0.1, 0);
+                doMove(aImg[num], 'left', 20, 300);
+                num > 0 && num--;
+            }
+            oSure.onclick = function () {
+                oWarn.style.display = 'none';
+
+            }
+        }
+    </script> -->
+    <script>
+        window.onload = function () {
+            var oPrv = document.getElementById('prv'),
+                oNext = document.getElementById('next'),
+                oWarn = document.getElementsByClassName('warn')[0],
+                oBackgrd = document.getElementsByClassName('background')[0],
+                oSure = document.getElementById('sure'),
+                aImg = document.getElementsByTagName('img'),
+                sgin = 1,
+                num = 0;
+
+            for (var i = 0; i < aImg.length; i++) {
+                aImg[i].style.zIndex = aImg.length - i;
+            }
+
+            oPrv.onclick = function () {
+                sgin = -1;
+                doMove();
+            };
+            oNext.onclick = function () {
+                sgin = 1;
+                doMove();
+            };
+            oSure.onclick = function () {
+                oBackgrd.style.display = oWarn.style.display = 'none';
+                for (var i = 0; i < aImg.length; i++) {
+                    aImg[i].style.left = 0;
+                    aImg[i].style.opacity = 1;
+                }
+                num = 0;
+            };
+
+            function doMove() {
+
+                if (num < aImg.length - 1) {
+                    aImg[num].style.left = sgin * 300 + 'px';
+                    aImg[num].style.opacity = 0;
+
+                    num++;
+                }
+                else {
+                    fnReset();
+                }
+            }
+
+            function fnReset() {
+                oBackgrd.style.display = oWarn.style.display = 'block';
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <a href="#" id="prv">
+            <</a>
+                <img src="imgs/kikyou1.jpg" alt="kikyou">
+                <img src="imgs/kikyou2.jpg" alt="kikyou">
+                <img src="imgs/kikyou3.jpg" alt="kikyou">
+                <img src="imgs/kikyou4.jpg" alt="kikyou">
+                <a href="#" id="next">></a>
+    </div>
+    <div class="warn">
+        <div class="background"></div>
+        <div class="text">
+            <p>再来一遍?</p>
+            <button id="sure">确定</button>
+        </div>
+    </div>
+
+</body>
+
+</html>

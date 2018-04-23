@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日期方法--倒计时抢购</title>
+    <style>
+        h3 {
+            border-bottom: 1px solid #000;
+            padding: 8px;
+        }
+
+        #goodsBox {
+            width: 900px;
+        }
+
+        #goodsBox img {
+            width: 120px;
+            height: 120px;
+        }
+
+        #goodsBox li {
+            list-style: none;
+            display: inline-block;
+            width: 200px;
+            position: relative;
+        }
+
+        .inp1 {
+            width: 140px;
+            border: none;
+            background-color: #eee;
+            height: 22px;
+        }
+
+        button {
+            border: none;
+        }
+
+        #goodsBox span {
+            display: inline-block;
+            width: 200px;
+            margin: 10px;
+            font-family: cursive;
+        }
+
+        #goodsBox p {
+            font-family: -webkit-pictograph;
+            font-size: 14px;
+        }
+
+        #goodsBox b {
+            color: red;
+        }
+
+        #shopping {
+            width: 900px;
+        }
+
+        #shopping li {
+            background: #eee;
+            list-style: none;
+            margin: 10px;
+            height: 60px;
+            display: none;
+            background: url(imgs/down.png) 0 0 no-repeat;
+        }
+
+        #shopping img {
+            width: 50px;
+            height: 50px;
+            margin-left: 290px;
+        }
+
+        .shopping_header {
+            background-color: #eee;
+            padding: 0px 30px;
+            color: #bda399;
+            font-weight: 900;
+            display: block;
+            width: 820px;
+            height: 60px;
+            margin: 0 50px;
+        }
+
+        .shopping_header span {
+            width: 260px;
+            display: inline-block;
+            line-height: 60px;
+            padding: 0px 35px;
+        }
+
+        #shopping span {
+            margin: 10px 10px;
+            width: 300px;
+            display: inline-block;
+            padding: 10px;
+            vertical-align: bottom;
+            font-family: sans-serif;
+        }
+
+        #shopping b {
+            display: inline-block;
+            width: 129px;
+            text-align: center;
+            padding: 10px 0;
+            color: #ce2b62;
+        }
+
+        #sum {
+            margin: 45px;
+            font: normal 18px bold;
+            font-weight: 900;
+            font-size: 22px;
+        }
+
+        #sum strong {
+            font-size: 20px;
+            font-weight: 700;
+            color: #b11349;
+        }
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script src="scripts/日期转换函数(toWeek,toTwo).js"></script>
+    <script>
+        window.onload = function () {
+            var oBox = document.getElementById('goodsBox'),
+                aBox = oBox.getElementsByTagName('li'),
+                aInp = oBox.getElementsByClassName('inp1'),
+                aBtn = oBox.getElementsByTagName('button'),
+                aSpan = oBox.getElementsByTagName('span'),
+                oList = document.getElementById('shopping'),
+                aList = oList.getElementsByTagName('li'),
+                aPrice = oList.getElementsByTagName('b'),
+                oSum = document.getElementById('sum').getElementsByTagName('strong')[0],
+                str = '',
+                timer = null,
+                sum = 0;
+
+            for (let i = 0; i < aBox.length; i++) {
+                aList[i].tab = true;
+                aBox[i].tab = true;
+            }
+            for (let j = 0; j < aBtn.length; j++) {
+                fnTime(aBtn[j]);
+                aBtn[j].index = j;
+            }
+            function fnTime(obj) {
+                obj.onclick = function () {
+                    var _this = this;
+                    timer = setInterval(function () {
+                        var iNow = new Date();
+                        var text = aInp[_this.index].value;
+                        var iNew = new Date(text);
+                        var t = Math.floor((iNew - iNow) / 1000);
+                        if (t > 0) {
+                            str = '剩余' + Math.floor(t / 86400) + '天' + Math.floor(t % 86400 / 3600) + '时' + Math.floor(t % 86400 % 3600 / 60)
+                                + '分' + t % 60 + '秒';
+                            aSpan[_this.index].innerHTML = str;
+                        }
+                        if ((t == 0 || t < 0) && aBox[_this.index].tab == true) {
+                            aBox[_this.index].tab = false;
+                            shake(aBox[_this.index], 'left', function () {
+                                doMove(aBox[_this.index], 'top', 15, 300, function () {
+                                    aList[_this.index].style.display = 'block';
+                                    aBox[_this.index].style.display = 'none';
+                                })
+                            })
+                        }
+
+                        for (let j = 0; j < aList.length; j++) {
+                            if (aList[j].style.display == 'block' && aList[j].tab == true) {
+                                aList[j].tab = false;
+                                sum += parseInt(aPrice[j].innerHTML);
+                            }
+                            oSum.innerHTML = sum + '元';
+                        }
+                    }, 1000)
+                }
+
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div class="cantainer">
+        <div class="countdown">
+            <h3>最后疯抢!</h3>
+            <ul id="goodsBox">
+                <li>
+                    <input type="text" name="newTime" class="inp1" value="March 25, 2018 14:50:0">
+                    <button>确定</button>
+                    <span>剩余00天00时00分00秒</span>
+                    <img src="imgs/ip8.jpg" alt="goods">
+                    <p>Apple iPhone 8 Plus (A1864) 64GB 金色 移动联通电信4G手机</p>
+                    <strong>低至:
+                        <b>￥6499</b>
+                    </strong>
+                </li>
+                <li>
+                    <input type="text" namse="newTime" class="inp1">
+                    <button>确定</button>
+                    <span>剩余00天00时00分00秒</span>
+                    <img src="imgs/ipX.jpg" alt="goods">
+                    <p>Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机</p>
+                    <strong>低至:
+                        <b>￥8388</b>
+                    </strong>
+                </li>
+                <li>
+                    <input type="text" name="newTime" class="inp1">
+                    <button>确定</button>
+                    <span>剩余00天00时00分00秒</span>
+                    <img src="imgs/ip7.jpg" alt="goods">
+                    <p>Apple iPhone 7 Plus (A1661) 128G 黑色 移动联通电信4G手机</p>
+                    <strong>低至:
+                        <b>￥5799</b>
+                    </strong>
+                </li>
+                <li>
+                    <input type="text" name="newTime" class="inp1">
+                    <button>确定</button>
+                    <span>剩余00天00时00分00秒</span>
+                    <img src="imgs/ip6.jpg" alt="goods">
+                    <p> Apple iPhone 6 32GB 金色 移动联通电信4G手机</p>
+                    <strong>低至:
+                        <b>￥2299</b>
+                    </strong>
+                </li>
+            </ul>
+        </div>
+        <div class="goodsList">
+            <p class="shopping_header">
+                <span>商品名称</span>
+                <span>价钱</span>
+            </p>
+            <ul id="shopping">
+
+                <li>
+                    <span>Apple iPhone 8 Plus 64GB ...</span>
+                    <b>6499</b>
+                    <img src="imgs/ip8.jpg" alt="pic">
+                </li>
+                <li>
+                    <span>Apple iPhone X 64GB ...</span>
+                    <b>8388</b>
+                    <img src="imgs/ipX.jpg" alt="pic">
+                </li>
+                <li>
+                    <span>Apple iPhone 7 Plus 128G ...</span>
+                    <b>5799</b>
+                    <img src="imgs/ip7.jpg" alt="pic">
+                </li>
+                <li>
+                    <span>Apple iPhone 6 32GB ...</span>
+                    <b>2299</b>
+                    <img src="imgs/ip6.jpg" alt="pic">
+                </li>
+            </ul>
+        </div>
+        <p id="sum">总价:
+            <strong>0元</strong>
+        </p>
+    </div>
+</body>
+
+</html>

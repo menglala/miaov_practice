@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件 - 拖拽回放</title>
+    <style>
+        #div1 {
+            width: 80px;
+            height: 80px;
+            background-color: orange;
+            position: absolute;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oDiv = document.getElementById('div1'),
+                oBtn = document.getElementsByTagName('button')[0],
+                arrLeft = [],
+                arrTop = [];
+
+            var ev = ev || event;
+
+            oDiv.onmousedown = function (ev) {
+                var disX = ev.clientX - oDiv.offsetLeft,
+                    disY = ev.clientY - oDiv.offsetTop;
+                if (oDiv.setCapture) {
+                    oDiv.setCapture();
+                }
+                //将鼠标移动动作处理函数添加给document,为了防止鼠标移动过快脱离div
+                document.onmousemove = function (ev) {
+                    var l = ev.clientX - disX,
+                        t = ev.clientY - disY;
+                    if (oDiv.setCapture) {
+                        oDiv.setCapture();
+                    }
+
+                    if (l < 0) {
+                        l = 0;
+                    } else if (l > document.documentElement.clientWidth - oDiv.offsetWidth) {
+                        l = document.documentElement.clientWidth - oDiv.offsetWidth;
+                    }
+                    if (t < 0) {
+                        t = 0;
+                    } else if (t > document.documentElement.clientHeight - oDiv.offsetHeight) {
+                        t = document.documentElement.clientHeight - oDiv.offsetHeight;
+                    }
+                    arrLeft.push(l);        //将div的运动轨迹保存在数组里
+                    arrTop.push(t);
+                    oDiv.style.left = l + "px";
+                    oDiv.style.top = t + "px";
+                    //解决文字选中被拖拽的浏览器默认行为和图片无法拖拽的默认行为
+                    //IE8以下用setCapture()全局捕获解决
+                    return false;
+                };
+                document.onmouseup = function (ev) {
+                    document.onmousemove = document.onmouseup = null;
+                    if (oDiv.releaseCapture) {
+                        oDiv.releaseCapture();
+                    }
+                };
+            };
+
+            oBtn.onclick = function () {
+                var num = 0;
+                arrLeft.reverse();      //将保存div的left值的数组倒置
+                arrTop.reverse();
+                arrLeft.push(8);
+                arrTop.push(31);
+                //开启div反向轨迹的定时器
+                timer = setInterval(function () {
+                    oDiv.style.left = arrLeft[num] + 'px';
+                    oDiv.style.top = arrTop[num] + 'px';
+                    num++;
+
+                    if (num == arrLeft.length) {
+                        clearInterval(timer);
+                        arrLeft = [];
+                        arrTop= [];
+                    }
+                }, 50)
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <button>回放</button>
+    <div id="div1"></div>
+</body>
+
+</html>

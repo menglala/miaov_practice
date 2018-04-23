@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM--居中广告</title>
+    <style>
+        body {
+            height: 1500px;
+        }
+
+        div {
+            width: 50px;
+            height: 80px;
+            background-color: orange;
+            position: relative;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var aDiv = document.getElementsByTagName('div');
+
+            function stayMiddle() {
+                for (let i = 0; i < aDiv.length; i++) {
+                    //获取滚动条的距离
+                    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                    //如果滚动条距离不为0,即存在滚动条隐藏的内容,将obj置于可视区的垂直居中,再加上滚动条的距离即是整个页面居中距离
+                    if (scrollTop) {
+                        aDiv[i].style.top = (document.documentElement.clientHeight / 2- aDiv[i].offsetHeight) +scrollTop + 'px';
+                    } else { 
+                        aDiv[i].style.top = document.documentElement.clientHeight / 2 - aDiv[i].offsetHeight + 'px';
+                    }
+                }
+            }
+            stayMiddle();
+            //当用户拉取页面时,触发滚动条事件,使obj居中
+            window.onscroll = function () {
+                stayMiddle();
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="left"></div>
+    <div class="right"></div>
+</body>
+
+</html>

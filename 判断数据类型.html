@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>判断数据类型</title>
+	<script type="text/javascript">
+		window.onload=function(){
+			var attr=[ '100px', 'abc'-6, [], -98765, 34, -2, 0, '300', , function(){alert(1);}, null, document, [], true, '200px'-30,'23.45元', 5, Number('abc'), function(){ alert(3); }, 'xyz'-90],
+				oP=document.getElementById('show'),
+				oBtn1=document.getElementById('btn1'),
+				oBtn2=document.getElementById('btn2'),
+				oBtn3=document.getElementById('btn3'),
+				max,
+				aNan=[],
+				oBtn4=document.getElementById('btn4');
+
+			function isNumber(){
+				oP.innerHTML="";//先清空上次点击后的p
+				var aNum=[];
+				for (var i = 0; i < attr.length; i++) {
+					//！isNaN(attr[i]):当数据类型为数字且不是NaN时为真
+					//    -->判断条件才能将NaN和undefined排除
+					//判断数据类型是否为数字类型并排除NaN和undefined，如果是则放入数组aNum
+					if (typeof(attr[i])==='number'&&!isNaN(attr[i])) {
+						aNum.push(attr[i]);
+					}
+				}
+				//因为最后一个没有逗号所以分开
+				//将数组aNum放入p中并显示出来
+				for (var i = 0; i < aNum.length-1; i++) {
+					oP.innerHTML+=aNum[i]+',';
+				}
+				oP.innerHTML+=aNum[aNum.length-1];
+				
+			}
+
+			function isNumable(){
+				oP.innerHTML="";
+				var aNumble=[];
+				for (var i = 0; i < attr.length; i++) {
+					//parseFloat(attr[i])===0):将数类型为0但布尔类型为false的包含进来
+					//如果用parseFloat方法可以转换为数字的说为真，
+					//否则转化为NaN的为假(例如：数组，布尔类型)
+					if(parseFloat(attr[i])||parseFloat(attr[i])===0){
+						aNumble.push(attr[i]);
+					}
+				}
+				for (var i = 0; i < aNumble.length-1; i++) {
+					oP.innerHTML+=aNumble[i]+',';
+				}
+				oP.innerHTML+=aNumble[aNumble.length-1]
+			}
+			
+			function maxNum(){
+				oP.innerHTML="";
+				var aNumble=[];
+				for (var i = 0; i < attr.length; i++) {
+					//parseFloat(attr[i])===0):将数字0但布尔类型为false的包含进来
+					//如果用parseFloat方法可以转换为数字的说为真，
+					//否则转化为NaN的为假(例如：数组，布尔类型)
+					if(parseFloat(attr[i])||parseFloat(attr[i])===0){
+						aNumble.push(attr[i]);
+					}
+				}
+				max=parseFloat(aNumble[0]);
+				for (var i = 0; i < aNumble.length; i++) {
+					
+					 if (max<parseFloat(aNumble[i])) {
+					 	max=parseFloat(aNumble[i]);
+					 }
+				}
+				oP.innerHTML=max;
+			}
+
+			function nanLocation(){
+				oP.innerHTML="";
+				aNan=[];//清空上次点击事件中的aNan
+				for (var i = 0; i < attr.length; i++) {
+					//首先判断是否为数字类型，因为NaN属于数字类型，并用NaN判断是否是NaN，是的话则位置i放入数组aNan
+					if( typeof(attr[i])==='number' && isNaN(attr[i]) ){
+						aNan.push(i);
+					}
+				}
+				for (var i = 0; i < aNan.length; i++) {
+					oP.innerHTML+=aNan[i]+',';
+				}
+			}
+
+			oBtn1.onclick=function(){
+				isNumber();
+			}
+
+			oBtn2.onclick=function(){
+				isNumable();
+			}
+
+			oBtn3.onclick=function(){
+				maxNum();
+			}		
+
+			oBtn4.onclick=function(){
+				nanLocation();
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="box">
+		<p>var attr=[ '100px', 'abc'-6, [], -98765, 34, -2, 0, '300', , function(){alert(1);}, null, document, [], true, '200px'-30,'23.45元', 5, Number('abc'), function(){ alert(3); }, 'xyz'-90]</p>
+		<ul>
+			<li>找到arr里所有的数字：-98765, 34, -2, 0, 5</li>
+			<li>找到可以转成数字的：'100px', -98765, 34, -2, 0, '300', '23.45元', 5</li>
+			<li>把转成数字以后，最大值判断出来：300</li>
+			<li>把 NaN 所在的位置找出来：1 14 17 19</li>
+		</ul>
+		<input id="btn1" type="button" value="arrt里的数字">
+		<input id="btn2" type="button" value="可以转成数字的">
+		<input id="btn3"type="button" value="转成数字后，最大值判断出来的">
+		<input id="btn4"type="button" value="把NaN所在的位置找出来">
+		<p id="show"></p>
+	</div>
+</body>
+</html>

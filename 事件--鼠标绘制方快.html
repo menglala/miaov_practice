@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件--鼠标拉出方块</title>
+    <style>
+        .wrap {
+            width: 700px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .box {
+            width: 700px;
+            height: 500px;
+            border: 1px solid black;
+            position: relative;
+        }
+
+        p {
+            color: red;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+            border: 1px solid green;
+            position: absolute;
+        }
+    </style>
+    <script src="scripts/到浏览器的绝对位置函数(getPos).js"></script>
+    <script>
+        window.onload = function () {
+            var oBox = document.getElementsByClassName('box')[0],
+                oUl = document.getElementById('list'),
+                ev = event || window.event;
+
+            var posBox = getPos(oBox);
+
+            oBox.onmousedown = function (ev) {
+                var oLi = document.createElement('li'),
+                    oldX = ev.clientX - posBox.left,      //获取鼠标按下时,鼠标到box左边框的距离
+                    oldY = ev.clientY - posBox.top;       //鼠标按下时,鼠标到box顶部的距离
+
+
+                document.onmousemove = function (ev) {
+                    var newX = ev.clientX - posBox.left,    //鼠标移动中,鼠标到box左边框的距离
+                        newY = ev.clientY - posBox.top,     //移动中,鼠标到box顶部的距离
+                        newX = newX < 0 ? 0 : newX,         //如果鼠标到box左边距离为负,说明鼠标移出box,设为0
+                        //移动时,若鼠标到左边框距离大于box的宽度,说明鼠标从右边移出box,令距离最大为box的右边框内
+                        newX = newX - oBox.clientWidth > 0 ? oBox.clientWidth : newX,
+                        //令鼠标移动过程与box顶部的距离限制在box内
+                        newY = newY < 0 ? 0 : newY,
+                        newY = newY - oBox.clientHeight > 0 ? oBox.clientHeight : newY;
+                    
+                    oLi.style.left = ((newX - oldX) < 0 ? newX : oldX) + 'px';
+                    oLi.style.top = ((newY - oldY) < 0 ? newY : oldY) + 'px';
+                    oLi.style.width = Math.abs(newX - oldX - 2) + 'px';
+                    oLi.style.height = Math.abs(newY - oldY - 2) + 'px';
+                    oUl.appendChild(oLi);
+                }
+                document.onmouseup = function () {
+                    document.onmousemove = document.onmouseup = null;
+                }
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="box">
+            <ul id="list"></ul>
+        </div>
+        <p>可以在上面方框中任意绘制方块</p>
+    </div>
+
+</body>
+
+</html>

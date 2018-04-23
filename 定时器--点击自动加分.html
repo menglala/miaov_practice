@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--点击自动加分</title>
+    <style>
+        ul {
+            padding-left: 5px;
+            margin: 200px auto;
+            width: 449px;
+            height: 49px;
+            border: 1px solid black;
+            position: relative;
+            cursor: pointer;
+            background-color: aquamarine;
+        }
+
+        li {
+            list-style: none;
+            display: inline-block;
+            padding: 10px;
+            margin-left: -10px;
+            font-size: 22px;
+            position: absolute;
+            background-color: #fff;
+        }
+        
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var oUl = document.getElementById('list'),
+                num = 0,
+                timer = null,
+                timer2 = null,
+                str = '',
+                aLi = oUl.getElementsByTagName('li');
+
+            for (let i = 0; i < aLi.length; i++) {
+                aLi[i].style.left = 10 + i * 45 + 'px';
+            }
+            oUl.onclick = function () {
+                timer = setInterval(function () {
+                    doMove(aLi[num], 'top', 10, -160);
+                    changeOpacity(aLi[num], 0.1, 0);
+                    if (num == aLi.length - 1) {
+                        timer2 = setTimeout(function () {
+                                oUl.style.backgroundColor='#fff';
+                        }, 100)
+                        clearInterval(timer);
+                    } else {
+                        num++;
+                    }
+                }, 100)
+
+            }
+        }
+    </script>
+</head>
+
+<body>
+ 
+    <ul id="list">
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+        <li>+1</li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商品价格统计</title>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oUl=document.getElementById('list'),
+				aLi=oUl.getElementsByTagName('li'),
+				oP=document.getElementById('statis');
+				
+
+				function addPrice(id){
+					var oBtn1=aLi[i].getElementsByTagName('input')[0];
+					var oStrong=aLi[i].getElementsByTagName('strong')[0];
+					var oEm=aLi[i].getElementsByTagName('em')[0];
+					var oSpan=aLi[i].getElementsByTagName('span')[0];
+					var oBtn2=aLi[i].getElementsByTagName('input')[1];
+					var	num=0;//必须放在函数内定义，否则是全局变量
+
+					oBtn1.onclick=function(){
+						num--;
+						if (num<0) {
+							num=0;
+						}
+					oStrong.innerHTML=num;
+					oSpan.innerHTML=num*parseFloat(oEm.innerHTML)+'元';
+					statistcs();
+					}
+					oBtn2.onclick=function(){
+						num++;
+						oStrong.innerHTML=num;
+						oSpan.innerHTML=num*parseFloat(oEm.innerHTML)+'元';
+						statistcs();
+					}
+				}
+
+			for (var i = 0; i < aLi.length; i++) {
+				addPrice(aLi[i]);
+			}
+			
+			function statistcs(){
+				var aStrong=[],
+					aSpan,
+					aEm=[],
+					aEx=[];
+					total=0,//提前将total定义为数字类型，否则会被定义为对象
+					cost=0;
+
+				for (var i = 0; i < aLi.length; i++) {
+					aStrong.push(aLi[i].getElementsByTagName('strong')[0]);
+					aSpan=oUl.getElementsByTagName('span');
+					total += parseInt(aStrong[i].innerHTML);
+					cost += parseFloat(aSpan[i].innerHTML);
+					if (parseInt(aStrong[i].innerHTML)) {
+						aEm.push(parseFloat(aLi[i].getElementsByTagName('em')[0].innerHTML));
+					}
+				}
+				aEm.sort(function(a,b){ return b-a;});//?怎么排序的
+				aEm[0]=aEm[0]?aEm[0]:0 ;//如果aEm[0]为真，则将aEm[0]赋给aEm[0],反之aEm[0]为假时，将0赋给aEm[0]
+				//在没有添加商品的时候，件数为0，aEm为未定义；在这种情况将0赋给aEm[0]
+
+				oP.innerHTML='商品合计共<strong>' + total + '件，</strong>共花费了<span>' + cost +'元，</span>其中最贵的商品单价是<em>' + aEm[0] + '元。</em>';
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="list">
+		<li>
+			<input type="button" value="-">
+			<strong>0</strong>
+			<input type="button" value="+">单价为：
+			<em>12.5元</em>&nbsp小计为：
+			<span>0元</span>
+		</li>
+		<li>
+			<input type="button" value="-">
+			<strong>0</strong>
+			<input type="button" value="+">单价为：
+			<em>8.5元</em>&nbsp小计为：
+			<span>0元</span>
+		</li>
+		<li>
+			<input type="button" value="-">
+			<strong>0</strong>
+			<input type="button" value="+">单价为：
+			<em>15元</em>&nbsp小计为：
+			<span>0元</span>
+		</li>	
+		<li>
+			<input type="button" value="-">
+			<strong>0</strong>
+			<input type="button" value="+">单价为：
+			<em>10元</em>&nbsp小计为：
+			<span>0元</span>
+		</li>
+	</ul>
+	<p id="statis">商品合计共
+		<strong>0件，</strong>
+		共花费了<span>0元，</span>
+		其中最贵的商品单价是<em>0元。</em>
+	</p>
+</body>
+</html>

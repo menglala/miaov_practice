@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时器--抖动的图片</title>
+    <style>
+        .box {
+            margin: 220px 100px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+    </style>
+    <script src="scripts/定时器的应用--运动函数(抖动,透明度,运动).js"></script>
+    <script>
+        window.onload = function () {
+            var aImg = document.getElementsByTagName('img');
+
+            for (let i = 0; i < aImg.length; i++) {
+                aImg[i].style.left = 50 + i * 110 + 'px';
+                aImg[i].onmouseover = function () {
+                    shake(this, 'top');
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <img src="imgs/pic1.jpg" alt="picture">
+        <img src="imgs/pic2.jpg" alt="picture">
+        <img src="imgs/pic3.jpg" alt="picture">
+        <img src="imgs/pic4.jpg" alt="picture">
+        <img src="imgs/pic5.jpg" alt="picture">
+        <img src="imgs/pic6.jpg" alt="picture">
+        <img src="imgs/pic7.jpg" alt="picture">
+        <img src="imgs/pic8.jpg" alt="picture">
+        <img src="imgs/pic9.jpg" alt="picture">
+    </div>
+</body>
+
+</html>
